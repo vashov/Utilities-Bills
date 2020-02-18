@@ -16,6 +16,12 @@
 # Mono auto generated files
 mono_crash.*
 
+# Xamarin.Android Resource.Designer.cs files
+**/*.Droid/**/[Rr]esource.[Dd]esigner.cs
+**/*.Android/**/[Rr]esource.[Dd]esigner.cs
+**/Android/**/[Rr]esource.[Dd]esigner.cs
+**/Droid/**/[Rr]esource.[Dd]esigner.cs
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UtilitiesBills.Models
+﻿namespace UtilitiesBills.Models
 {
     public enum MenuItemType
     {
