@@ -3,14 +3,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
+             xmlns:model="clr-namespace:UtilitiesBills.Models"
              mc:Ignorable="d"
+             Title="Bills"
+             x:Name="BillsPageElement"
              x:Class="UtilitiesBills.Views.BillsPage">
+    <ContentPage.BindingContext>
+        <vm:BillsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Text="Add"
+            Command="{Binding AddBillCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label 
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ListView
+            SeparatorColor="Black"
+            HasUnevenRows="True"
+            x:Name="BillList"
+            SelectionMode="None"
+            ItemsSource="{Binding BillsItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="20,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label 
+                                Text="{Binding CreationDate, 
+                                    StringFormat='{0:MMMM d, yyyy}'}"
+                                FontSize="Medium"/>
+                            <Label 
+                                Grid.Column="1"
+                                HorizontalTextAlignment="End"
+                                Text="{Binding TotalExpensesDisplay}"/>
+                            <Label 
+                                LineBreakMode="TailTruncation"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                Text="{Binding Note}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <d:ListView.ItemsSource>
+                <x:Array Type="{x:Type model:Bill}">
+                    <model:Bill 
+                        Note="Not one"
+                        TotalExpenses="120"/>
+                    <model:Bill 
+                        Note="Not one"
+                        TotalExpenses="120"/>
+                    <model:Bill 
+                        Note="Not one"
+                        TotalExpenses="120"/>
+                </x:Array>
+            </d:ListView.ItemsSource>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>
