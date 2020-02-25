@@ -3,16 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
-             xmlns:model="clr-namespace:UtilitiesBills.Models"
+             xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
+             vmb:ViewModelLocator.AutoWireViewModel="true"
              mc:Ignorable="d"
              Title="Bills"
              x:Name="BillsPageElement"
-             x:Class="UtilitiesBills.Views.BillsPage">
-    <ContentPage.BindingContext>
-        <vm:BillsViewModel />
-    </ContentPage.BindingContext>
-
+             x:Class="UtilitiesBills.Views.BillsView">
     <ContentPage.ToolbarItems>
         <ToolbarItem 
             Text="Add"
@@ -56,19 +52,6 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type model:Bill}">
-                    <model:Bill 
-                        Note="Not one"
-                        TotalExpenses="120"/>
-                    <model:Bill 
-                        Note="Not one"
-                        TotalExpenses="120"/>
-                    <model:Bill 
-                        Note="Not one"
-                        TotalExpenses="120"/>
-                </x:Array>
-            </d:ListView.ItemsSource>
         </ListView>
     </ContentPage.Content>
 </ContentPage>

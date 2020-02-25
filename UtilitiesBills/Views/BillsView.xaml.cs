@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 namespace UtilitiesBills.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BillsPage : ContentPage
+    public partial class BillsView : ContentPage
     {
-        public BillsPage()
+        public BillsView()
         {
             BindingContextChanged += BillsPage_BindingContextChanged;
             InitializeComponent();

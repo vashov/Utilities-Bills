@@ -4,15 +4,23 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UtilitiesBills.Models;
 using UtilitiesBills.Services;
+using UtilitiesBills.Services.Navigation;
 using Xamarin.Forms;
 
-namespace UtilitiesBills.ViewModels
+namespace UtilitiesBills.ViewModels.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected IRepository<Bill> BillsRepository = DependencyService.Get<IRepository<Bill>>();
+        protected IRepository<BillItem> BillsRepository { get; set; }
+        protected INavigationService NavigationService { get; set; }
+
+        public BaseViewModel()
+        {
+            BillsRepository = ViewModelLocator.Resolve<IRepository<BillItem>>();
+            NavigationService = ViewModelLocator.Resolve<INavigationService>();
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

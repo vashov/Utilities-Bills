@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using UtilitiesBills.Models;
+using UtilitiesBills.ViewModels.Base;
 
 namespace UtilitiesBills.ViewModels
 {

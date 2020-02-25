@@ -4,8 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
+             xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
+             vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             x:Class="UtilitiesBills.Views.MenuPage"
+             x:Class="UtilitiesBills.Views.MenuView"
              Title="Menu">
     <ContentPage.BindingContext>
         <vm:MenuViewModel />

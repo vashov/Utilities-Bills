@@ -7,13 +7,13 @@
                   mc:Ignorable="d"
                   x:Class="UtilitiesBills.Views.MainPage">
     <MasterDetailPage.Master>
-        <views:MenuPage />
+        <views:MenuView />
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <views:BillsPage />
+                <views:BillsView />
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

@@ -1,4 +1,7 @@
-﻿using UtilitiesBills.Services;
+﻿using Autofac;
+using UtilitiesBills.Models;
+using UtilitiesBills.Services;
+using UtilitiesBills.Services.Bill;
 using UtilitiesBills.Views;
 using Xamarin.Forms;
 
@@ -10,7 +13,8 @@ namespace UtilitiesBills
         {
             InitializeComponent();
 
-            DependencyService.Register<MockBillRepository>();
+            
+            //DependencyService.Register<MockBillRepository>();
             MainPage = new MainPage();
         }
 

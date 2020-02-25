@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UtilitiesBills.Models;
 
-namespace UtilitiesBills.Services
+namespace UtilitiesBills.Services.Bill
 {
-    public class MockBillRepository : IRepository<Bill>
+    public class MockBillRepository : IRepository<BillItem>
     {
-        private readonly List<Bill> _bills;
+        private readonly List<BillItem> _bills;
 
         public MockBillRepository()
         {
-            _bills = new List<Bill>
+            _bills = new List<BillItem>
             {
-                new Bill
+                new BillItem
                 {
                     Id = 1,
                     Note = "First bill.",
@@ -22,7 +22,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 259,
                     ElectricityValue = 29609
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 2,
                     CreationDate = new DateTime(2019, 9, 15),
@@ -30,7 +30,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 272,
                     ElectricityValue = 29737
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 3,
                     Note = "Some bill.",
@@ -39,7 +39,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 314,
                     ElectricityValue = 29866
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 4,
                     Note = "Okay bill",
@@ -48,7 +48,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 294,
                     ElectricityValue = 29991
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 5,
                     CreationDate = new DateTime(2019, 12, 15),
@@ -56,7 +56,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 304,
                     ElectricityValue = 30114
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 6,
                     CreationDate = new DateTime(2020, 1, 14),
@@ -64,7 +64,7 @@ namespace UtilitiesBills.Services
                     ColdWaterValue = 313,
                     ElectricityValue = 30238
                 },
-                new Bill
+                new BillItem
                 {
                     Id = 7,
                     Note = "Bad idea",
@@ -75,7 +75,7 @@ namespace UtilitiesBills.Services
                 }
             };
 
-            foreach (Bill bill in _bills)
+            foreach (BillItem bill in _bills)
             {
                 bill.ColdWaterPrice = 18;
                 bill.HotWaterPrice = 105;
@@ -87,7 +87,7 @@ namespace UtilitiesBills.Services
             }
         }
 
-        private decimal GetTotalExpenses(Bill bill)
+        private decimal GetTotalExpenses(BillItem bill)
         {
             return bill.HotWaterValue * bill.HotWaterPrice
                 + bill.ColdWaterValue * bill.ColdWaterPrice
@@ -95,7 +95,7 @@ namespace UtilitiesBills.Services
                 + bill.WaterDisposalValue * bill.WaterDisposalPrice;
         }
 
-        public bool AddItem(Bill item)
+        public bool AddItem(BillItem item)
         {
             _bills.Add(item);
             return true;
@@ -103,7 +103,7 @@ namespace UtilitiesBills.Services
 
         public bool DeleteItem(int id)
         {
-            Bill billForRemoving = _bills.FirstOrDefault(bill => bill.Id == id);
+            BillItem billForRemoving = _bills.FirstOrDefault(bill => bill.Id == id);
             if (billForRemoving == null)
             {
                 return false;
@@ -113,19 +113,19 @@ namespace UtilitiesBills.Services
             return true;
         }
 
-        public Bill GetItem(int id)
+        public BillItem GetItem(int id)
         {
             return _bills.FirstOrDefault(bill => bill.Id == id);
         }
 
-        public IEnumerable<Bill> GetItems()
+        public IEnumerable<BillItem> GetItems()
         {
             return _bills;
         }
 
-        public bool UpdateItem(Bill item)
+        public bool UpdateItem(BillItem item)
         {
-            Bill billForUpdating = _bills.FirstOrDefault(bill => bill.Id == item.Id);
+            BillItem billForUpdating = _bills.FirstOrDefault(bill => bill.Id == item.Id);
             if (billForUpdating == null)
             {
                 return false;
