@@ -56,9 +56,10 @@ namespace UtilitiesBills.ViewModels.Base
             }
             else
             {
-                builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>();
+                throw new NotImplementedException();
+                //builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>();
 
-                UseMockService = false;
+                //UseMockService = false;
             }
         }
 
@@ -66,6 +67,7 @@ namespace UtilitiesBills.ViewModels.Base
         {
             builder.RegisterType<MenuViewModel>();
             builder.RegisterType<BillsViewModel>();
+            builder.RegisterType<SettingsViewModel>();
         }
 
         //public static void RegisterSingleton<TInterface, T>() where TInterface : class where T : class, TInterface

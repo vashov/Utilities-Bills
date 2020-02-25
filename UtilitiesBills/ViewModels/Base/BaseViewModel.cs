@@ -41,5 +41,9 @@ namespace UtilitiesBills.ViewModels.Base
             OnPropertyChanged(propertyName);
             return true;
         }
+
+        public virtual void Initialize(object navigationData)
+        {
+        }
     }
 }

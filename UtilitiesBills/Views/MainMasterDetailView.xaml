@@ -5,7 +5,7 @@
                   xmlns:d="http://xamarin.com/schemas/2014/forms/design"
                   xmlns:views="clr-namespace:UtilitiesBills.Views"
                   mc:Ignorable="d"
-                  x:Class="UtilitiesBills.Views.MainPage">
+                  x:Class="UtilitiesBills.Views.MainMasterDetailView">
     <MasterDetailPage.Master>
         <views:MenuView />
     </MasterDetailPage.Master>

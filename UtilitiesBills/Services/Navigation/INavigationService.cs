@@ -1,10 +1,11 @@
-﻿using UtilitiesBills.ViewModels.Base;
+﻿using UtilitiesBills.Models;
+using UtilitiesBills.ViewModels.Base;
 
 namespace UtilitiesBills.Services.Navigation
 {
     public interface INavigationService
     {
-        BaseViewModel PreviousPageViewModel { get; set; }
+        //BaseViewModel PreviousPageViewModel { get; set; }
 
         /// <summary>
         /// Выполняет переход на одну из двух страниц при запуске приложения.
@@ -33,5 +34,7 @@ namespace UtilitiesBills.Services.Navigation
         /// Удаляет все предыдущие страницы из стека навигации.
         /// </summary>
         void RemoveBackStack();
+
+        void NavigateFromMenu(MenuItemType id);
     }
 }

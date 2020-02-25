@@ -14,12 +14,21 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <ListView 
+            x:Name="MenuList"
             RowHeight="70"
+            SelectedItem="{Binding SelectedMenuItem}"
             ItemsSource="{Binding MenuItems}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell>
+                    <ViewCell IsEnabled="{Binding IsAvailable}">
                         <Grid>
+                            <Grid.Triggers>
+                                <DataTrigger 
+                                    TargetType="Grid"
+                                    Binding="{Binding IsAvailable}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="DarkGray" />
+                                </DataTrigger>
+                            </Grid.Triggers>
                             <Label 
                                 Margin="10"
                                 VerticalTextAlignment="Center"

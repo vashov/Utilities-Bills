@@ -1,7 +1,10 @@
 ﻿using Autofac;
+using System;
 using UtilitiesBills.Models;
 using UtilitiesBills.Services;
 using UtilitiesBills.Services.Bill;
+using UtilitiesBills.Services.Navigation;
+using UtilitiesBills.ViewModels.Base;
 using UtilitiesBills.Views;
 using Xamarin.Forms;
 
@@ -13,13 +16,18 @@ namespace UtilitiesBills
         {
             InitializeComponent();
 
-            
-            //DependencyService.Register<MockBillRepository>();
-            MainPage = new MainPage();
+            MainPage = new MainMasterDetailView();
         }
 
         protected override void OnStart()
         {
+            InitNavigation();
+        }
+
+        private void InitNavigation()
+        {
+            var navigationService = ViewModelLocator.Resolve<INavigationService>();
+            navigationService.Initialize();
         }
 
         protected override void OnSleep()
