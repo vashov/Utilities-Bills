@@ -15,13 +15,12 @@ namespace UtilitiesBills
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainMasterDetailView();
+            //MainPage = new MainMasterDetailView();
+            InitNavigation();
         }
 
         protected override void OnStart()
         {
-            InitNavigation();
         }
 
         private void InitNavigation()

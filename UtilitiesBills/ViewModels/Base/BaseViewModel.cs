@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using UtilitiesBills.Models;
 using UtilitiesBills.Services;
 using UtilitiesBills.Services.Navigation;
-using Xamarin.Forms;
 
 namespace UtilitiesBills.ViewModels.Base
 {

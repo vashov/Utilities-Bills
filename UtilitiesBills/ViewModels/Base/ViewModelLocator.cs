@@ -56,24 +56,17 @@ namespace UtilitiesBills.ViewModels.Base
             }
             else
             {
+                UseMockService = false;
                 throw new NotImplementedException();
-                //builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>();
-
-                //UseMockService = false;
             }
         }
 
         private static void RegisterViewModels(ContainerBuilder builder)
         {
-            builder.RegisterType<MenuViewModel>();
-            builder.RegisterType<BillsViewModel>();
-            builder.RegisterType<SettingsViewModel>();
+            builder.RegisterType<MenuViewModel>().AsSelf();
+            builder.RegisterType<BillsViewModel>().AsSelf();
+            builder.RegisterType<SettingsViewModel>().AsSelf();
         }
-
-        //public static void RegisterSingleton<TInterface, T>() where TInterface : class where T : class, TInterface
-        //{
-        //    _container.Register<TInterface, T>().AsSingleton();
-        //}
 
         public static T Resolve<T>() where T : class
         {

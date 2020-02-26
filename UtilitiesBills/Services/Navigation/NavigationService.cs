@@ -1,43 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using UtilitiesBills.Models;
-using UtilitiesBills.ViewModels;
 using UtilitiesBills.ViewModels.Base;
+using UtilitiesBills.Views;
 using Xamarin.Forms;
 
 namespace UtilitiesBills.Services.Navigation
 {
     public class NavigationService : INavigationService
     {
+        private static MasterDetailPage _defaultMasterDetailPage = null;
+
         private MasterDetailPage MasterDetailPage => App.Current.MainPage as MasterDetailPage;
 
         private readonly Dictionary<MenuItemType, NavigationPage> MenuNavigationPages = 
             new Dictionary<MenuItemType, NavigationPage>();
 
-        public BaseViewModel PreviousPageViewModel { get; set; }
-
         public void Initialize()
         {
-            var vm = MasterDetailPage.Master.BindingContext as BaseViewModel;
-            vm.Initialize(null);
+            if (_defaultMasterDetailPage == null)
+            {
+                var detail = AddNavigationPageIfNotExists(MenuItemType.Bills) as NavigationPage;
+                _defaultMasterDetailPage = new MasterDetailPage
+                {
+                    Master = new MenuView(),
+                    Detail = detail
+                };
+            }
+
+            App.Current.MainPage = _defaultMasterDetailPage;
         }
 
-        public void NavigateFromMenu(MenuItemType id)
+        public Page AddNavigationPageIfNotExists(MenuItemType id)
         {
             if (!MenuNavigationPages.ContainsKey(id))
             {
                 switch (id)
                 {
                     case MenuItemType.Bills:
-                        Page billPage = CreatePage(typeof(BillsViewModel));
-                        MenuNavigationPages.Add(id, new NavigationPage(billPage));
+                        MenuNavigationPages.Add(id, new NavigationPage(new BillsView()));
                         break;
                     case MenuItemType.Settings:
-                        Page settingsPage = CreatePage(typeof(SettingsViewModel));
-                        MenuNavigationPages.Add(id, new NavigationPage(settingsPage));
+                        MenuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
                         break;
                     case MenuItemType.Charts:
                         throw new NotImplementedException(nameof(MenuItemType.Charts));
@@ -46,17 +54,28 @@ namespace UtilitiesBills.Services.Navigation
                 }
             }
 
-            NavigationPage newNavPage = MenuNavigationPages[id];
-            if (MasterDetailPage.Detail != newNavPage)
-            {
-                MasterDetailPage.Detail = newNavPage;
-                //if (Device.RuntimePlatform == Device.Android)
-                //    await Task.Delay(100);
-                MasterDetailPage.IsPresented = false;
-            }
+            return MenuNavigationPages[id];
+        }
 
-            var vm = newNavPage.CurrentPage.BindingContext as BaseViewModel;
-            vm.Initialize(null);
+        public void NavigateFromMenu(MenuItemType id)
+        {
+            Page newNavPage = AddNavigationPageIfNotExists(id);
+            try
+            {
+                if (MasterDetailPage.Detail != newNavPage)
+                {
+                    MasterDetailPage.Detail = newNavPage;
+                    MasterDetailPage.IsPresented = false;
+
+                    var vm = (newNavPage as NavigationPage).CurrentPage.BindingContext as BaseViewModel;
+                    vm.Initialize(null);
+                }
+            }
+            catch (Exception e)
+            {
+                string ms = e.Message;
+                Debug.WriteLine(ms);
+            }
         }
 
         public void NavigateTo<TViewModel>() where TViewModel : BaseViewModel
@@ -68,16 +87,6 @@ namespace UtilitiesBills.Services.Navigation
         {
             InternalNavigateTo(typeof(TViewModel), parameter);
         }
-
-        /*public ViewModelBase PreviousPageViewModel
-        {
-            get
-            {
-                var mainPage = Application.Current.MainPage as CustomNavigationView;
-                var viewModel = mainPage.Navigation.NavigationStack[mainPage.Navigation.NavigationStack.Count - 2].BindingContext;
-                return viewModel as ViewModelBase;
-            }
-        }*/
 
         public void RemoveLastFromBackStack()
         {
@@ -108,17 +117,10 @@ namespace UtilitiesBills.Services.Navigation
         {
             Page page = CreatePage(viewModelType);
 
-            //if (page is MainMasterDetailView)
-            //{
-            //    Application.Current.MainPage = page;
-            //    return;
-            //}
-
             var detailPage = MasterDetailPage.Detail;
             if (detailPage != null)
             {
                 await detailPage.Navigation.PushAsync(page);
-                //Application.Current.MainPage = new CustomNavigationView(page);
             }
             else
             {

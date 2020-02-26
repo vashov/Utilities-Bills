@@ -5,8 +5,6 @@ namespace UtilitiesBills.Services.Navigation
 {
     public interface INavigationService
     {
-        //BaseViewModel PreviousPageViewModel { get; set; }
-
         /// <summary>
         /// Выполняет переход на одну из двух страниц при запуске приложения.
         /// </summary>
@@ -35,6 +33,9 @@ namespace UtilitiesBills.Services.Navigation
         /// </summary>
         void RemoveBackStack();
 
+        /// <summary>
+        /// Навигация с помощью меню MasterDetail.
+        /// </summary>
         void NavigateFromMenu(MenuItemType id);
     }
 }
