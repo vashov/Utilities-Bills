@@ -1,19 +1,20 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using UtilitiesBills.Models;
+using UtilitiesBills.ViewModels.Base;
 using Xamarin.Forms;
 
 namespace UtilitiesBills.ViewModels
 {
     public class BillsViewModel : BaseViewModel
     {
-        public ObservableCollection<Bill> BillsItems { get; set; } = new ObservableCollection<Bill>();
+        public ObservableCollection<BillItem> BillsItems { get; set; } = new ObservableCollection<BillItem>();
 
         public Command AddBillCommand { get; set; }
 
         public BillsViewModel()
         {
-            foreach (Bill bill in BillsRepository.GetItems())
+            foreach (BillItem bill in BillsRepository.GetItems())
             {
                 BillsItems.Add(bill);
             }
@@ -22,7 +23,7 @@ namespace UtilitiesBills.ViewModels
         }
         public void OnBillTapped(object sender, ItemTappedEventArgs e)
         {
-            var bill = e.Item as Bill;
+            var bill = e.Item as BillItem;
             Debug.WriteLine("bill: " + bill.CreationDate.ToString("d")); // TODO add BillDetailPage or BillEditorPage
         }
 

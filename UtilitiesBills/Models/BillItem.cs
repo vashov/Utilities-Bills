@@ -2,7 +2,7 @@
 
 namespace UtilitiesBills.Models
 {
-    public class Bill
+    public class BillItem
     {
         public int Id { get; set; }
         public string Note { get; set; }

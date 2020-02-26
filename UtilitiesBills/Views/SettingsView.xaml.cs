@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace UtilitiesBills.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuPage : ContentPage
+    public partial class SettingsView : ContentPage
     {
-        public MenuPage()
+        public SettingsView()
         {
             InitializeComponent();
         }

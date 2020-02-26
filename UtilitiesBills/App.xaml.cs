@@ -1,5 +1,5 @@
-﻿using UtilitiesBills.Services;
-using UtilitiesBills.Views;
+﻿using UtilitiesBills.Services.Navigation;
+using UtilitiesBills.ViewModels.Base;
 using Xamarin.Forms;
 
 namespace UtilitiesBills
@@ -9,9 +9,7 @@ namespace UtilitiesBills
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockBillRepository>();
-            MainPage = new MainPage();
+            InitNavigation();
         }
 
         protected override void OnStart()
@@ -24,6 +22,12 @@ namespace UtilitiesBills
 
         protected override void OnResume()
         {
+        }
+
+        private void InitNavigation()
+        {
+            var navigationService = ViewModelLocator.Resolve<INavigationService>();
+            navigationService.Initialize();
         }
     }
 }
