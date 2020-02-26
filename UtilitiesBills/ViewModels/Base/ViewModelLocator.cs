@@ -14,6 +14,8 @@ namespace UtilitiesBills.ViewModels.Base
     {
         private static readonly IContainer _container;
 
+        public static bool UseMockService { get; set; }
+
         public static readonly BindableProperty AutoWireViewModelProperty = BindableProperty.CreateAttached(
             propertyName: "AutoWireViewModel", 
             returnType: typeof(bool), 
@@ -21,6 +23,14 @@ namespace UtilitiesBills.ViewModels.Base
             defaultValue: default(bool), 
             propertyChanged: OnAutoWireViewModelChanged
         );
+
+        static ViewModelLocator()
+        {
+            var builder = new ContainerBuilder();
+            RegisterTypes(builder, true);
+
+            _container = builder.Build();
+        }
 
         public static bool GetAutoWireViewModel(BindableObject bindable)
         {
@@ -32,14 +42,9 @@ namespace UtilitiesBills.ViewModels.Base
             bindable.SetValue(ViewModelLocator.AutoWireViewModelProperty, value);
         }
 
-        public static bool UseMockService { get; set; }
-
-        static ViewModelLocator()
+        public static T Resolve<T>() where T : class
         {
-            var builder = new ContainerBuilder();
-            RegisterTypes(builder, true);
-
-            _container = builder.Build();
+            return _container.Resolve<T>();
         }
 
         private static void RegisterTypes(ContainerBuilder builder, bool useMockServices)
@@ -68,10 +73,6 @@ namespace UtilitiesBills.ViewModels.Base
             builder.RegisterType<SettingsViewModel>().AsSelf();
         }
 
-        public static T Resolve<T>() where T : class
-        {
-            return _container.Resolve<T>();
-        }
 
         private static void OnAutoWireViewModelChanged(BindableObject bindable, object oldValue, object newValue)
         {

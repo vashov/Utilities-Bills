@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using UtilitiesBills.Models;
 using UtilitiesBills.ViewModels.Base;
 
@@ -9,7 +8,7 @@ namespace UtilitiesBills.ViewModels
     {
         private MenuItem _selectedMenuItem;
 
-        public List<MenuItem> MenuItems { get; set; }
+        public ObservableCollection<MenuItem> MenuItems { get; set; }
 
         public MenuItem SelectedMenuItem
         {
@@ -22,7 +21,7 @@ namespace UtilitiesBills.ViewModels
 
         public MenuViewModel()
         {
-            MenuItems = new List<MenuItem>
+            MenuItems = new ObservableCollection<MenuItem>
             {
                 new MenuItem
                 {
@@ -42,13 +41,6 @@ namespace UtilitiesBills.ViewModels
                     IsAvailable = true
                 }
             };
-        }
-
-        public override void Initialize(object navigationData)
-        {
-            base.Initialize(navigationData);
-
-            SelectedMenuItem = MenuItems.First(x => x.IsAvailable);
         }
 
         private void OnSelectMenuItem()

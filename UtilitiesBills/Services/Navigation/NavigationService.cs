@@ -13,18 +13,17 @@ namespace UtilitiesBills.Services.Navigation
 {
     public class NavigationService : INavigationService
     {
-        private static MasterDetailPage _defaultMasterDetailPage = null;
+        private MasterDetailPage _defaultMasterDetailPage = null;
+        private readonly Dictionary<MenuItemType, NavigationPage> _menuNavigationPages = 
+            new Dictionary<MenuItemType, NavigationPage>();
 
         private MasterDetailPage MasterDetailPage => App.Current.MainPage as MasterDetailPage;
-
-        private readonly Dictionary<MenuItemType, NavigationPage> MenuNavigationPages = 
-            new Dictionary<MenuItemType, NavigationPage>();
 
         public void Initialize()
         {
             if (_defaultMasterDetailPage == null)
             {
-                var detail = AddNavigationPageIfNotExists(MenuItemType.Bills) as NavigationPage;
+                var detail = AddNavigationPageIfNotExists(MenuItemType.Bills);
                 _defaultMasterDetailPage = new MasterDetailPage
                 {
                     Master = new MenuView(),
@@ -37,15 +36,15 @@ namespace UtilitiesBills.Services.Navigation
 
         public Page AddNavigationPageIfNotExists(MenuItemType id)
         {
-            if (!MenuNavigationPages.ContainsKey(id))
+            if (!_menuNavigationPages.ContainsKey(id))
             {
                 switch (id)
                 {
                     case MenuItemType.Bills:
-                        MenuNavigationPages.Add(id, new NavigationPage(new BillsView()));
+                        _menuNavigationPages.Add(id, new NavigationPage(new BillsView()));
                         break;
                     case MenuItemType.Settings:
-                        MenuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
+                        _menuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
                         break;
                     case MenuItemType.Charts:
                         throw new NotImplementedException(nameof(MenuItemType.Charts));
@@ -54,7 +53,7 @@ namespace UtilitiesBills.Services.Navigation
                 }
             }
 
-            return MenuNavigationPages[id];
+            return _menuNavigationPages[id];
         }
 
         public void NavigateFromMenu(MenuItemType id)
@@ -73,8 +72,7 @@ namespace UtilitiesBills.Services.Navigation
             }
             catch (Exception e)
             {
-                string ms = e.Message;
-                Debug.WriteLine(ms);
+                Debug.WriteLine(e.Message);
             }
         }
 

@@ -20,9 +20,6 @@
     <Compile Update="Views\BillsView.xaml.cs">
       <DependentUpon>BillsView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\MainMasterDetailView.xaml.cs">
-      <DependentUpon>MainMasterDetailView.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>

@@ -10,15 +10,19 @@ namespace UtilitiesBills.ViewModels.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected IRepository<BillItem> BillsRepository { get; set; }
         protected INavigationService NavigationService { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public BaseViewModel()
         {
             BillsRepository = ViewModelLocator.Resolve<IRepository<BillItem>>();
             NavigationService = ViewModelLocator.Resolve<INavigationService>();
+        }
+
+        public virtual void Initialize(object navigationData)
+        {
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -39,10 +43,6 @@ namespace UtilitiesBills.ViewModels.Base
             callAfterChange?.Invoke();
             OnPropertyChanged(propertyName);
             return true;
-        }
-
-        public virtual void Initialize(object navigationData)
-        {
         }
     }
 }
