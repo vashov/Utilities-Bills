@@ -5,7 +5,10 @@ using System.Reflection;
 using UtilitiesBills.Models;
 using UtilitiesBills.Services;
 using UtilitiesBills.Services.Bill;
+using UtilitiesBills.Services.BillCalculator;
+using UtilitiesBills.Services.Dialog;
 using UtilitiesBills.Services.Navigation;
+using UtilitiesBills.Services.Price;
 using Xamarin.Forms;
 
 namespace UtilitiesBills.ViewModels.Base
@@ -52,11 +55,14 @@ namespace UtilitiesBills.ViewModels.Base
             RegisterViewModels(builder);
 
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
+            builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+            builder.RegisterType<BillCalculatorService>().As<IBillCalculatorService>().SingleInstance();
 
             // Change injected dependencies
             if (useMockServices)
             {
-                builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>();
+                builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>().SingleInstance();
+                builder.RegisterType<MockPriceService>().As<IPriceService>().SingleInstance();
                 UseMockService = true;
             }
             else
@@ -71,8 +77,8 @@ namespace UtilitiesBills.ViewModels.Base
             builder.RegisterType<MenuViewModel>().AsSelf();
             builder.RegisterType<BillsViewModel>().AsSelf();
             builder.RegisterType<SettingsViewModel>().AsSelf();
+            builder.RegisterType<BillEditorViewModel>().AsSelf();
         }
-
 
         private static void OnAutoWireViewModelChanged(BindableObject bindable, object oldValue, object newValue)
         {

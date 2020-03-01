@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using UtilitiesBills.Models;
 using UtilitiesBills.ViewModels.Base;
 using UtilitiesBills.Views;
@@ -76,14 +77,14 @@ namespace UtilitiesBills.Services.Navigation
             }
         }
 
-        public void NavigateTo<TViewModel>() where TViewModel : BaseViewModel
+        public async Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
         {
-            InternalNavigateTo(typeof(TViewModel), null);
+            await InternalNavigateToAsync(typeof(TViewModel), null);
         }
 
-        public void NavigateTo<TViewModel>(object parameter) where TViewModel : BaseViewModel
+        public async Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
         {
-            InternalNavigateTo(typeof(TViewModel), parameter);
+            await InternalNavigateToAsync(typeof(TViewModel), parameter);
         }
 
         public void RemoveLastFromBackStack()
@@ -94,6 +95,16 @@ namespace UtilitiesBills.Services.Navigation
             {
                 detail.Navigation.RemovePage(
                     detail.Navigation.NavigationStack[detail.Navigation.NavigationStack.Count - 2]);
+            }
+        }
+
+        public void GoBack()
+        {
+            var detail = MasterDetailPage.Detail;
+
+            if (detail != null)
+            {
+                detail.Navigation.PopAsync();
             }
         }
 
@@ -111,14 +122,21 @@ namespace UtilitiesBills.Services.Navigation
             }
         }
         
-        private async void InternalNavigateTo(Type viewModelType, object parameter)
+        private async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool modal = false)
         {
             Page page = CreatePage(viewModelType);
 
             var detailPage = MasterDetailPage.Detail;
             if (detailPage != null)
             {
-                await detailPage.Navigation.PushAsync(page);
+                if (modal)
+                {
+                    await detailPage.Navigation.PushModalAsync(page);
+                }
+                else
+                {
+                    await detailPage.Navigation.PushAsync(page);
+                }
             }
             else
             {
@@ -146,6 +164,16 @@ namespace UtilitiesBills.Services.Navigation
             var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
             var viewType = Type.GetType(viewAssemblyName);
             return viewType;
+        }
+
+        public async Task NavigateToModalAsync<TViewModel>() where TViewModel : BaseViewModel
+        {
+            await InternalNavigateToAsync(typeof(TViewModel), null, modal: true);
+        }
+
+        public async Task NavigateToModalAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
+        {
+            await InternalNavigateToAsync(typeof(TViewModel), parameter, modal: true);
         }
     }
 }

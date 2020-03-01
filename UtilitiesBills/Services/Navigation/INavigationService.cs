@@ -1,5 +1,7 @@
-﻿using UtilitiesBills.Models;
+﻿using System.Threading.Tasks;
+using UtilitiesBills.Models;
 using UtilitiesBills.ViewModels.Base;
+using Xamarin.Forms;
 
 namespace UtilitiesBills.Services.Navigation
 {
@@ -14,14 +16,14 @@ namespace UtilitiesBills.Services.Navigation
         /// Выполняет иерархическую навигацию на указанной странице.
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
-        void NavigateTo<TViewModel>() where TViewModel : BaseViewModel;
+        Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel;
 
         /// <summary>
         /// Выполняет иерархическую навигацию на указанной странице, передавая параметр.
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="parameter"></param>
-        void NavigateTo<TViewModel>(object parameter) where TViewModel : BaseViewModel;
+        Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
 
         /// <summary>
         /// Удаляет предыдущую страницу из стека навигации.
@@ -37,5 +39,10 @@ namespace UtilitiesBills.Services.Navigation
         /// Навигация с помощью меню MasterDetail.
         /// </summary>
         void NavigateFromMenu(MenuItemType id);
+
+        void GoBack();
+
+        Task NavigateToModalAsync<TViewModel>() where TViewModel : BaseViewModel;
+        Task NavigateToModalAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
     }
 }
