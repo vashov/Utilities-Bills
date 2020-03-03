@@ -31,7 +31,7 @@ namespace UtilitiesBills.Services.Navigation
         void NavigateFromMenu(MenuItemType id);
 
         /// <summary>
-        /// Навигация с помощью меню MasterDetail.
+        /// Вернуться по стеку навигации на предыдущую страницу.
         /// </summary>
         void GoBack();
     }
