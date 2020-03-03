@@ -11,7 +11,7 @@
              x:Class="UtilitiesBills.Views.BillsView">
     <ContentPage.ToolbarItems>
         <ToolbarItem 
-            Text="Add"
+            IconImageSource="add"
             Command="{Binding AddBillCommand}"/>
     </ContentPage.ToolbarItems>
     

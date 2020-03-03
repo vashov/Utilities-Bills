@@ -1,5 +1,7 @@
-﻿using UtilitiesBills.Models;
+﻿using System.Threading.Tasks;
+using UtilitiesBills.Models;
 using UtilitiesBills.ViewModels.Base;
+using Xamarin.Forms;
 
 namespace UtilitiesBills.Services.Navigation
 {
@@ -24,18 +26,13 @@ namespace UtilitiesBills.Services.Navigation
         void NavigateTo<TViewModel>(object parameter) where TViewModel : BaseViewModel;
 
         /// <summary>
-        /// Удаляет предыдущую страницу из стека навигации.
-        /// </summary>
-        void RemoveLastFromBackStack();
-
-        /// <summary>
-        /// Удаляет все предыдущие страницы из стека навигации.
-        /// </summary>
-        void RemoveBackStack();
-
-        /// <summary>
         /// Навигация с помощью меню MasterDetail.
         /// </summary>
         void NavigateFromMenu(MenuItemType id);
+
+        /// <summary>
+        /// Вернуться по стеку навигации на предыдущую страницу.
+        /// </summary>
+        void GoBack();
     }
 }

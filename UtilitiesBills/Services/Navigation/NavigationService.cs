@@ -34,28 +34,6 @@ namespace UtilitiesBills.Services.Navigation
             App.Current.MainPage = _defaultMasterDetailPage;
         }
 
-        public Page AddNavigationPageIfNotExists(MenuItemType id)
-        {
-            if (!_menuNavigationPages.ContainsKey(id))
-            {
-                switch (id)
-                {
-                    case MenuItemType.Bills:
-                        _menuNavigationPages.Add(id, new NavigationPage(new BillsView()));
-                        break;
-                    case MenuItemType.Settings:
-                        _menuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
-                        break;
-                    case MenuItemType.Charts:
-                        throw new NotImplementedException(nameof(MenuItemType.Charts));
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(id), (int)id, typeof(MenuItemType));
-                }
-            }
-
-            return _menuNavigationPages[id];
-        }
-
         public void NavigateFromMenu(MenuItemType id)
         {
             Page newNavPage = AddNavigationPageIfNotExists(id);
@@ -86,39 +64,24 @@ namespace UtilitiesBills.Services.Navigation
             InternalNavigateTo(typeof(TViewModel), parameter);
         }
 
-        public void RemoveLastFromBackStack()
+        public void GoBack()
         {
             var detail = MasterDetailPage.Detail;
 
             if (detail != null)
             {
-                detail.Navigation.RemovePage(
-                    detail.Navigation.NavigationStack[detail.Navigation.NavigationStack.Count - 2]);
-            }
-        }
-
-        public void RemoveBackStack()
-        {
-            var detail = MasterDetailPage.Detail;
-
-            if (detail != null)
-            {
-                for (int i = 0; i < detail.Navigation.NavigationStack.Count - 1; i++)
-                {
-                    var page = detail.Navigation.NavigationStack[i];
-                    detail.Navigation.RemovePage(page);
-                }
+                detail.Navigation.PopAsync();
             }
         }
         
-        private async void InternalNavigateTo(Type viewModelType, object parameter)
+        private void InternalNavigateTo(Type viewModelType, object parameter)
         {
             Page page = CreatePage(viewModelType);
 
             var detailPage = MasterDetailPage.Detail;
             if (detailPage != null)
             {
-                await detailPage.Navigation.PushAsync(page);
+                detailPage.Navigation.PushAsync(page);
             }
             else
             {
@@ -146,6 +109,28 @@ namespace UtilitiesBills.Services.Navigation
             var viewAssemblyName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewModelAssemblyName);
             var viewType = Type.GetType(viewAssemblyName);
             return viewType;
+        }
+
+        private Page AddNavigationPageIfNotExists(MenuItemType id)
+        {
+            if (!_menuNavigationPages.ContainsKey(id))
+            {
+                switch (id)
+                {
+                    case MenuItemType.Bills:
+                        _menuNavigationPages.Add(id, new NavigationPage(new BillsView()));
+                        break;
+                    case MenuItemType.Settings:
+                        _menuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
+                        break;
+                    case MenuItemType.Charts:
+                        throw new NotImplementedException(nameof(MenuItemType.Charts));
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(id), (int)id, typeof(MenuItemType));
+                }
+            }
+
+            return _menuNavigationPages[id];
         }
     }
 }

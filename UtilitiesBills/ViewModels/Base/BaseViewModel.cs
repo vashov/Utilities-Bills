@@ -1,48 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using UtilitiesBills.Models;
+﻿using UtilitiesBills.Models;
 using UtilitiesBills.Services;
+using UtilitiesBills.Services.BillCalculator;
+using UtilitiesBills.Services.Dialog;
 using UtilitiesBills.Services.Navigation;
+using UtilitiesBills.Services.Price;
+using UtilitiesBills.Validations.ViewModelValidators;
 
 namespace UtilitiesBills.ViewModels.Base
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : BaseNotifier
     {
-        protected IRepository<BillItem> BillsRepository { get; set; }
-        protected INavigationService NavigationService { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        protected IRepository<BillItem> BillsRepository { get; private set; }
+        protected INavigationService NavigationService { get; private set; }
+        protected IDialogService DialogService { get; private set; }
+        protected IBillCalculatorService BillCalculatorService { get; private set; }
+        protected IPriceService PriceService { get; private set; }
+        protected IValidator Validator { get; set; }
 
         public BaseViewModel()
         {
             BillsRepository = ViewModelLocator.Resolve<IRepository<BillItem>>();
             NavigationService = ViewModelLocator.Resolve<INavigationService>();
+            DialogService = ViewModelLocator.Resolve<IDialogService>();
+            PriceService = ViewModelLocator.Resolve<IPriceService>();
+            BillCalculatorService = ViewModelLocator.Resolve<IBillCalculatorService>();
         }
 
         public virtual void Initialize(object navigationData)
         {
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetProperty<T>(ref T field, T value, 
-            Action callAfterChange = null,
-            [CallerMemberName] string  propertyName = "")
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value))
-            {
-                return false;
-            }
-
-            field = value;
-            callAfterChange?.Invoke();
-            OnPropertyChanged(propertyName);
-            return true;
-        }
+        }        
     }
 }

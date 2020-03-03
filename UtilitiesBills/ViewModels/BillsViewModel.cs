@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Linq;
 using UtilitiesBills.Models;
+using UtilitiesBills.Services;
 using UtilitiesBills.ViewModels.Base;
 using Xamarin.Forms;
 
@@ -14,17 +15,21 @@ namespace UtilitiesBills.ViewModels
 
         public BillsViewModel()
         {
-            foreach (BillItem bill in BillsRepository.GetItems())
-            {
-                BillsItems.Add(bill);
-            }
+            SubscribeToModifyBillRepository();
+            RefreshBillsItems();
 
             InitializeCommands();
         }
+
         public void OnBillTapped(object sender, ItemTappedEventArgs e)
         {
             var bill = e.Item as BillItem;
-            Debug.WriteLine("bill: " + bill.CreationDate.ToString("d")); // TODO add BillDetailPage or BillEditorPage
+            var args = new BillEditorArgs
+            {
+                Bill = bill.Clone() as BillItem,
+                PreviousMeterReading = GetPreviousMeterReading(bill)
+            };
+            NavigationService.NavigateTo<BillEditorViewModel>(args);
         }
 
         private void InitializeCommands()
@@ -34,7 +39,48 @@ namespace UtilitiesBills.ViewModels
 
         private void AddBill()
         {
-            Debug.WriteLine("You try add new bill"); // TODO add NewBillPage or BillEditorPage
+            var args = new BillEditorArgs
+            {
+                PreviousMeterReading = GetLastMeterReading()
+            };
+            NavigationService.NavigateTo<BillEditorViewModel>(args);
+        }
+
+        private MeterReadingItem GetLastMeterReading()
+        {
+            return BillsItems
+                .OrderByDescending(b => b.MeterReading.DateOfReading)
+                .First().MeterReading.Clone() as MeterReadingItem;
+        }
+
+        private MeterReadingItem GetPreviousMeterReading(BillItem bill)
+        {
+            return BillsItems
+                .Where(b => b.MeterReading.DateOfReading < bill.MeterReading.DateOfReading)
+                .OrderByDescending(b => b.MeterReading.DateOfReading)
+                .First().MeterReading.Clone() as MeterReadingItem;
+        }
+
+        private void SubscribeToModifyBillRepository()
+        {
+            MessagingCenter
+                .Subscribe<IRepository<BillItem>>(this, MessageKeys.AddBillItem, (s) => RefreshBillsItems());
+            MessagingCenter
+                .Subscribe<IRepository<BillItem>>(this, MessageKeys.DeleteBillItem, (s) => RefreshBillsItems());
+            MessagingCenter
+                .Subscribe<IRepository<BillItem>>(this, MessageKeys.UpdateBillItem, (s) => RefreshBillsItems());
+        }
+
+        private void RefreshBillsItems()
+        {
+            BillsItems.Clear();
+            IOrderedEnumerable<BillItem> bills = BillsRepository.GetItems()
+                .OrderByDescending(b => b.MeterReading.DateOfReading);
+
+            foreach (BillItem bill in bills)
+            {
+                BillsItems.Add(bill);
+            }
         }
     }
 }

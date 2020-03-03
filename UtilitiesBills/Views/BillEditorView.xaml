@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
+             xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
+             xmlns:conv="clr-namespace:UtilitiesBills.Converters"
+             xmlns:expandable="clr-namespace:Expandable;assembly=ExpandableView"
+             vmb:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             x:Class="UtilitiesBills.Views.BillEditorView">
+    <!--<ContentPage.BindingContext>
+        <vm:BillEditorViewModel />
+    </ContentPage.BindingContext>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:NullToBooleanConverter x:Key="nullToBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            IconImageSource="delete"
+            Command="{Binding DeleteBillCommand}"/>
+        
+        <ToolbarItem 
+            IconImageSource="edit"
+            Command="{Binding StartEditBillCommand}"/>
+
+        <ToolbarItem 
+            IconImageSource="save"
+            Command="{Binding SaveBillCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20,10">
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        FontSize="Medium"
+                        HorizontalOptions="Start"
+                        VerticalOptions="CenterAndExpand"
+                        Text="Дата:"/>
+                    <DatePicker 
+                        Format="ddd, MMM d, yyyy"
+                        Date="{Binding DateOfReading}"
+                        IsEnabled="{Binding IsSaveEnabled}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand"/>
+                </StackLayout>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label 
+                        Grid.ColumnSpan="5"
+                        FontSize="Large"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="Значения счетчиков"/>
+
+                    <Label 
+                        Grid.Row="1"
+                        FontSize="Subtitle"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="*"/>
+                    <Label 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="Subtitle"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="Значение"/>
+                    <Label 
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        FontSize="Subtitle"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="~"/>
+                    <Label 
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        FontSize="Subtitle"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="Итого"/>
+                    <Label 
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        FontSize="Subtitle"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Text="₽"/>
+
+                    <Image 
+                        Grid.Row="2"
+                        Source="waterHot"
+                        WidthRequest="30"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Entry 
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="{Binding HotWaterBulk.Value}"
+                        Keyboard="Numeric"
+                        IsEnabled="{Binding IsSaveEnabled}"/>
+                    <Label 
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding HotWaterBulkRounded}"/>
+                    <Label 
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding NetHotWaterBulk}"/>
+                    <Label 
+                        Grid.Row="2"
+                        Grid.Column="4"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding HotWaterSum}"/>
+
+                    <Image 
+                        Grid.Row="3"
+                        Source="waterCold"
+                        WidthRequest="30"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Entry 
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="{Binding ColdWaterBulk.Value}"
+                        Keyboard="Numeric"
+                        IsEnabled="{Binding IsSaveEnabled}"/>
+                    <Label 
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding ColdWaterBulkRounded}"/>
+                    <Label 
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding NetColdWaterBulk}"/>
+                    <Label 
+                        Grid.Row="3"
+                        Grid.Column="4"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding ColdWaterSum}"/>
+
+                    <Image 
+                        Grid.Row="4"
+                        Source="electricity"
+                        WidthRequest="30"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Entry 
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="{Binding ElectricityBulk.Value}"
+                        Keyboard="Numeric"
+                        IsEnabled="{Binding IsSaveEnabled}"/>
+                    <Label 
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding ElectricityBulkRounded}"/>
+                    <Label 
+                        Grid.Row="4"
+                        Grid.Column="3"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding NetElectricityBulk}"/>
+                    <Label 
+                        Grid.Row="4"
+                        Grid.Column="4"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding ElectricitySum}"/>
+
+                    <Image 
+                        Grid.Row="5"
+                        Source="pipeline"
+                        WidthRequest="30"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Label 
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding WaterDisposalBulk}"/>
+                    <Label 
+                        Grid.Row="5"
+                        Grid.Column="4"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        Text="{Binding WaterDisposalSum}"/>
+
+                    <Label 
+                        Grid.Row="6"
+                        Grid.Column="4"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="StartAndExpand"
+                        TextColor="LimeGreen"
+                        Margin="0,5"
+                        FontSize="Subtitle"
+                        Text="{Binding TotalSum}"/>
+                </Grid>
+
+                <expandable:ExpandableView 
+                    x:Name="expandablePrevMeterReadings" 
+                    ExpandAnimationLength="100">
+                    <expandable:ExpandableView.PrimaryView>
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                Text="Предыдущие значения" 
+                                FontSize="Large" 
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            <Image 
+                                x:Name="arrowPrewMeterReadings" 
+                                Source="expandArrow" 
+                                WidthRequest="30" 
+                                HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </expandable:ExpandableView.PrimaryView>
+
+                    <expandable:ExpandableView.SecondaryViewTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image 
+                                    Source="waterHot"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="StartAndExpand" />
+                                <Label 
+                                    Grid.Column="1"
+                                    FontSize="Medium"
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding PrevMeterReading.HotWaterBulk}"/>
+
+                                <Image 
+                                    Grid.Row="1"
+                                    Source="waterCold"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="StartAndExpand" />
+                                <Label 
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontSize="Medium"
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding PrevMeterReading.ColdWaterBulk}"/>
+
+                                <Image 
+                                    Grid.Row="2"
+                                    Source="electricity"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="StartAndExpand" />
+                                <Label 
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    FontSize="Medium"
+                                    VerticalTextAlignment="Center"
+                                    Text="{Binding PrevMeterReading.ElectricityBulk}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </expandable:ExpandableView.SecondaryViewTemplate>
+
+                </expandable:ExpandableView>
+
+                <expandable:ExpandableView 
+                    x:Name="expandablePrices" 
+                    ExpandAnimationLength="100">
+                    <expandable:ExpandableView.PrimaryView>
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                Text="Тарифы" 
+                                FontSize="Large" 
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            <Image 
+                                x:Name="arrowPrices" 
+                                Source="expandArrow" 
+                                WidthRequest="30" 
+                                HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </expandable:ExpandableView.PrimaryView>
+
+                    <expandable:ExpandableView.SecondaryViewTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image 
+                                    Source="waterHot"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="StartAndExpand" />
+                                <Entry 
+                                    Grid.Column="1"
+                                    Text="{Binding HotWaterPrice}"
+                                    Keyboard="Numeric"
+                                    IsEnabled="{Binding IsManuallyPrices}"/>
+
+                                <Image 
+                                    Grid.Row="1"
+                                    Source="waterCold"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="StartAndExpand" />
+                                <Entry 
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{Binding ColdWaterPrice}"
+                                    Keyboard="Numeric"
+                                    IsEnabled="{Binding IsManuallyPrices}"/>
+
+                                <Image 
+                                    Grid.Column="2"
+                                    Source="electricity"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="EndAndExpand" />
+                                <Entry 
+                                    Grid.Column="3"
+                                    Text="{Binding ElectricityPrice}"
+                                    Keyboard="Numeric"
+                                    IsEnabled="{Binding IsManuallyPrices}"/>
+
+                                <Image 
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Source="pipeline"
+                                    WidthRequest="30"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="EndAndExpand" />
+                                <Entry 
+                                    Grid.Row="1"
+                                    Grid.Column="3"
+                                    Text="{Binding WaterDisposalPrice}"
+                                    Keyboard="Numeric"
+                                    IsEnabled="{Binding IsManuallyPrices}"/>
+
+                                <Label 
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    VerticalOptions="CenterAndExpand" 
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="Установить тарифы вручную"/>
+                                <Switch 
+                                    Grid.Row="2"
+                                    Grid.Column="3"
+                                    IsToggled="{Binding IsManuallyPrices}"
+                                    IsEnabled="{Binding IsSaveEnabled}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </expandable:ExpandableView.SecondaryViewTemplate>
+
+                </expandable:ExpandableView>
+
+                <expandable:ExpandableView 
+                    x:Name="expandableNotes" 
+                    ExpandAnimationLength="100">
+                    <expandable:ExpandableView.PrimaryView>
+                        <StackLayout Orientation="Horizontal">
+                            <Label 
+                                Text="Заметки" 
+                                FontSize="Large" 
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"/>
+                            <Image 
+                                x:Name="arrowNotes" 
+                                Source="expandArrow" 
+                                WidthRequest="30" 
+                                HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                    </expandable:ExpandableView.PrimaryView>
+
+                    <expandable:ExpandableView.SecondaryViewTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label 
+                                    Text="Создан:"
+                                    FontSize="Medium"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="CenterAndExpand"/>
+                                <DatePicker 
+                                    Grid.Column="1"
+                                    Format="ddd, MMM d, yyyy"
+                                    Date="{Binding CreationDate, Mode=OneWay}"
+                                    FontSize="Medium"
+                                    HorizontalOptions="FillAndExpand"
+                                    IsEnabled="False"
+                                    VerticalOptions="CenterAndExpand"/>
+                                <Label 
+                                    Grid.Row="1"
+                                    Text="Редактирован:"
+                                    FontSize="Medium"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="CenterAndExpand"
+                                    IsVisible="{Binding EditDate, 
+                                        Converter={StaticResource nullToBooleanConverter}}"/>
+                                <DatePicker 
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Format="ddd, MMM d, yyyy"
+                                    Date="{Binding EditDate, Mode=OneWay}"
+                                    FontSize="Medium"
+                                    IsEnabled="False"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="CenterAndExpand"
+                                    IsVisible="{Binding EditDate, 
+                                        Converter={StaticResource nullToBooleanConverter}}"/>
+                                <Label 
+                                    Grid.Row="2"
+                                    Text="Заметка:"
+                                    FontSize="Medium"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="CenterAndExpand"/>
+                                <Entry 
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    IsEnabled="{Binding IsSaveEnabled}"
+                                    Text="{Binding Note.Value}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </expandable:ExpandableView.SecondaryViewTemplate>
+                </expandable:ExpandableView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
