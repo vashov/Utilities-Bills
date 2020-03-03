@@ -7,9 +7,9 @@ namespace UtilitiesBills.Services.Dialog
     {
         private Page CurrentPage => ((App.Current.MainPage as MasterDetailPage).Detail as NavigationPage).CurrentPage;
 
-        public void ShowAlert(string message, string title, string buttonLabel)
+        public Task ShowAlert(string message, string title, string buttonLabel)
         {
-            CurrentPage.DisplayAlert(title, message, buttonLabel);
+            return CurrentPage.DisplayAlert(title, message, buttonLabel);
         }
 
         public async Task<bool> ShowQuestion(string message, string title, string accept, string cancel)
