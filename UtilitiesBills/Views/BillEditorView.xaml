@@ -10,9 +10,9 @@
              vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              x:Class="UtilitiesBills.Views.BillEditorView">
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:BillEditorViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <ContentPage.Resources>
         <ResourceDictionary>
