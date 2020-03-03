@@ -25,6 +25,14 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem 
+                                Text="Отчет"
+                                Command="{Binding BindingContext.GenerateSmsReportCommand, 
+                                    Source={x:Reference BillsPageElement}}"
+                                CommandParameter="{Binding Id}"/>
+                        </ViewCell.ContextActions>
+                        
                         <Grid Padding="20,10">
                             <Grid.RowDefinitions>
                                 <RowDefinition />

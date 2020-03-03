@@ -10,7 +10,7 @@ namespace UtilitiesBills.ViewModels
 {
     public class BillEditorViewModel : EditorViewModel
     {
-        private enum NetBulkType
+        private enum BulkType
         {
             HotWaterBulk,
             ColdWaterBulk,
@@ -19,11 +19,11 @@ namespace UtilitiesBills.ViewModels
         }
 
         private BillItem _bill;
-        private MeterReadingItem _prevMeterReading;
+        private BillItem _prevBill;
 
-        private ValidatableObject<decimal> _hotWaterBulk;
-        private ValidatableObject<decimal> _coldWaterBulk;
-        private ValidatableObject<decimal> _electricityBulk;
+        private ValidatableObject<decimal> _hotWaterValue;
+        private ValidatableObject<decimal> _coldWaterValue;
+        private ValidatableObject<decimal> _electricityValue;
         private ValidatableObject<string> _note;
         private bool _needSetPricesManually;
         private decimal _hotWaterPrice;
@@ -36,13 +36,13 @@ namespace UtilitiesBills.ViewModels
         private bool _isValid;
         private bool _isManuallyPrices;
 
-        private decimal _hotWaterBulkRounded;
-        private decimal _coldWaterBulkRounded;
-        private decimal _electricityBulkRounded;
+        private decimal _hotWaterValueRounded;
+        private decimal _coldWaterValueRounded;
+        private decimal _electricityValueRounded;
 
-        private decimal _netHotWaterBulk;
-        private decimal _netColdWaterBulk;
-        private decimal _netElectricityBulk;
+        private decimal _hotWaterBulk;
+        private decimal _coldWaterBulk;
+        private decimal _electricityBulk;
         private decimal _waterDisposalBulk;
 
         private decimal _hotWaterSum;
@@ -55,28 +55,28 @@ namespace UtilitiesBills.ViewModels
 
         public bool IsSaveEnabled => EditorMode != EditorMode.View;
 
-        public MeterReadingItem PrevMeterReading
+        public BillItem PrevBill
         {
-            get => _prevMeterReading;
-            set => SetProperty(ref _prevMeterReading, value);
+            get => _prevBill;
+            set => SetProperty(ref _prevBill, value);
         }
 
-        public ValidatableObject<decimal> HotWaterBulk
+        public ValidatableObject<decimal> HotWaterValue
         {
-            get => _hotWaterBulk;
-            set => SetProperty(ref _hotWaterBulk, value);
+            get => _hotWaterValue;
+            set => SetProperty(ref _hotWaterValue, value);
         }
 
-        public ValidatableObject<decimal> ColdWaterBulk
+        public ValidatableObject<decimal> ColdWaterValue
         {
-            get => _coldWaterBulk;
-            set => SetProperty(ref _coldWaterBulk, value);
+            get => _coldWaterValue;
+            set => SetProperty(ref _coldWaterValue, value);
         }
 
-        public ValidatableObject<decimal> ElectricityBulk
+        public ValidatableObject<decimal> ElectricityValue
         {
-            get => _electricityBulk;
-            set => SetProperty(ref _electricityBulk, value);
+            get => _electricityValue;
+            set => SetProperty(ref _electricityValue, value);
         }
 
         public ValidatableObject<string> Note
@@ -133,54 +133,54 @@ namespace UtilitiesBills.ViewModels
             private set => SetProperty(ref _editDate, value);
         }
 
-        public decimal HotWaterBulkRounded
+        public decimal HotWaterValueRounded
         {
-            get => _hotWaterBulkRounded;
+            get => _hotWaterValueRounded;
             private set
             {
-                SetProperty(ref _hotWaterBulkRounded, value, () => 
-                    NetHotWaterBulk = CalcNetBulk(_hotWaterBulkRounded, PrevMeterReading.HotWaterBulk));
+                SetProperty(ref _hotWaterValueRounded, value, () => 
+                    HotWaterBulk = CalcBulk(_hotWaterValueRounded, PrevBill.HotWaterValueRounded));
             }
         }
         
-        public decimal ColdWaterBulkRounded
+        public decimal ColdWaterValueRounded
         {
-            get => _coldWaterBulkRounded;
+            get => _coldWaterValueRounded;
             private set
             {
-                SetProperty(ref _coldWaterBulkRounded, value, () => 
-                    NetColdWaterBulk = CalcNetBulk(_coldWaterBulkRounded, PrevMeterReading.ColdWaterBulk));
+                SetProperty(ref _coldWaterValueRounded, value, () => 
+                    ColdWaterBulk = CalcBulk(_coldWaterValueRounded, PrevBill.ColdWaterValueRounded));
             }
         }
 
-        public decimal ElectricityBulkRounded
+        public decimal ElectricityValueRounded
         {
-            get => _electricityBulkRounded;
+            get => _electricityValueRounded;
             private set
             {
-                SetProperty(ref _electricityBulkRounded, value, () => 
-                    NetElectricityBulk = CalcNetBulk(_electricityBulkRounded, PrevMeterReading.ElectricityBulk));
+                SetProperty(ref _electricityValueRounded, value, () => 
+                    ElectricityBulk = CalcBulk(_electricityValueRounded, PrevBill.ElectricityValueRounded));
             }
         }
 
-        public decimal NetHotWaterBulk 
+        public decimal HotWaterBulk 
         { 
-            get => _netHotWaterBulk;
-            private set => SetProperty(ref _netHotWaterBulk, value, 
-                () => OnWaterBulkChanged(NetBulkType.HotWaterBulk));
+            get => _hotWaterBulk;
+            private set => SetProperty(ref _hotWaterBulk, value, 
+                () => OnWaterBulkChanged(BulkType.HotWaterBulk));
         }
 
-        public decimal NetColdWaterBulk 
+        public decimal ColdWaterBulk 
         { 
-            get => _netColdWaterBulk;
-            private set => SetProperty(ref _netColdWaterBulk, value, 
-                () => OnWaterBulkChanged(NetBulkType.ColdWaterBulk));
+            get => _coldWaterBulk;
+            private set => SetProperty(ref _coldWaterBulk, value, 
+                () => OnWaterBulkChanged(BulkType.ColdWaterBulk));
         }
 
-        public decimal NetElectricityBulk 
+        public decimal ElectricityBulk 
         { 
-            get => _netElectricityBulk;
-            private set => SetProperty(ref _netElectricityBulk, value, CalcElectricitySum);
+            get => _electricityBulk;
+            private set => SetProperty(ref _electricityBulk, value, CalcElectricitySum);
         }
 
         public decimal WaterDisposalBulk 
@@ -237,19 +237,19 @@ namespace UtilitiesBills.ViewModels
 
         public BillEditorViewModel()
         {
-            _hotWaterBulk = 
-                new ValidatableObject<decimal>(() => HotWaterBulkRounded = RoundBulk(HotWaterBulk.Value));
-            _coldWaterBulk = 
-                new ValidatableObject<decimal>(() => ColdWaterBulkRounded = RoundBulk(ColdWaterBulk.Value));
-            _electricityBulk = 
-                new ValidatableObject<decimal>(() => ElectricityBulkRounded = RoundBulk(ElectricityBulk.Value));
+            _hotWaterValue = 
+                new ValidatableObject<decimal>(() => HotWaterValueRounded = RoundBulk(HotWaterValue.Value));
+            _coldWaterValue = 
+                new ValidatableObject<decimal>(() => ColdWaterValueRounded = RoundBulk(ColdWaterValue.Value));
+            _electricityValue = 
+                new ValidatableObject<decimal>(() => ElectricityValueRounded = RoundBulk(ElectricityValue.Value));
             _note = new ValidatableObject<string>();
 
             var context = new BillEditorValidatorContext
             {
-                HotWaterBulk = _hotWaterBulk,
-                ColdWaterBulk = _coldWaterBulk,
-                ElectricityBulk = _electricityBulk,
+                HotWaterBulk = _hotWaterValue,
+                ColdWaterBulk = _coldWaterValue,
+                ElectricityBulk = _electricityValue,
                 Note = _note
             };
 
@@ -268,22 +268,22 @@ namespace UtilitiesBills.ViewModels
                 throw new ArgumentException();
             }
 
-            PrevMeterReading = args.PreviousMeterReading;
+            PrevBill = args.PreviousBill;
 
             if (args.Bill != null)
             {
                 _bill = args.Bill.Clone() as BillItem;
 
-                HotWaterBulk.Value = _bill.MeterReading.HotWaterBulk;
-                ColdWaterBulk.Value = _bill.MeterReading.ColdWaterBulk;
-                ElectricityBulk.Value = _bill.MeterReading.ElectricityBulk;
+                HotWaterValue.Value = _bill.HotWaterValueRounded;
+                ColdWaterValue.Value = _bill.ColdWaterValueRounded;
+                ElectricityValue.Value = _bill.ElectricityValueRounded;
                 Note.Value = _bill.Note;
 
                 HotWaterPrice = _bill.HotWaterPrice;
                 ColdWaterPrice = _bill.ColdWaterPrice;
                 ElectricityPrice = _bill.ElectricityPrice;
                 WaterDisposalPrice = _bill.WaterDisposalPrice;
-                DateOfReading = _bill.MeterReading.DateOfReading.ToLocalTime();
+                DateOfReading = _bill.DateOfReading.ToLocalTime();
                 CreationDate = _bill.CreationDate.ToLocalTime();
                 EditDate = _bill.EditDate?.ToLocalTime();
 
@@ -327,17 +327,27 @@ namespace UtilitiesBills.ViewModels
                 return;
             }
 
-            _bill.MeterReading.HotWaterBulk = HotWaterBulk.Value;
-            _bill.MeterReading.ColdWaterBulk = ColdWaterBulk.Value;
-            _bill.MeterReading.ElectricityBulk = ElectricityBulk.Value;
+            _bill.HotWaterValueRounded = HotWaterValue.Value;
+            _bill.ColdWaterValueRounded = ColdWaterValue.Value;
+            _bill.ElectricityValueRounded = ElectricityValue.Value;
             _bill.Note = Note.Value;
 
-            _bill.MeterReading.DateOfReading = DateOfReading;
+            _bill.HotWaterBulk = HotWaterBulk;
+            _bill.ColdWaterBulk = ColdWaterBulk;
+            _bill.WaterDisposalBulk = WaterDisposalBulk;
+            _bill.ElectricityBulk = ElectricityBulk;
+
+            _bill.HotWaterExpenses = HotWaterSum;
+            _bill.ColdWaterExpenses = ColdWaterSum;
+            _bill.WaterDisposalExpenses = WaterDisposalSum;
+            _bill.ElectricityExpenses = ElectricitySum;
+            _bill.TotalExpenses = TotalSum;
+
+            _bill.DateOfReading = DateOfReading;
             _bill.HotWaterPrice = HotWaterPrice;
             _bill.ColdWaterPrice = ColdWaterPrice;
             _bill.ElectricityPrice = ElectricityPrice;
             _bill.WaterDisposalPrice = WaterDisposalPrice;
-            _bill.TotalExpenses = TotalSum;
 
             switch (EditorMode)
             {
@@ -400,28 +410,28 @@ namespace UtilitiesBills.ViewModels
             DeleteBillCommand.ChangeCanExecute();
         }
 
-        private decimal RoundBulk(decimal bulk) => BillCalculatorService.RoundBulk(bulk);
+        private decimal RoundBulk(decimal bulk) => BillCalculatorService.RoundBulkValue(bulk);
 
-        private decimal CalcNetBulk(decimal roundedBulk, decimal prevBulk)
+        private decimal CalcBulk(decimal roundedBulk, decimal prevBulk)
         {
-            return BillCalculatorService.CalcNetBulk(roundedBulk, prevBulk);
+            return BillCalculatorService.CalcBulk(roundedBulk, prevBulk);
         }
 
-        private void CalcBulkExpense(NetBulkType netBulkType, decimal netBulk, decimal price)
+        private void CalcBulkExpense(BulkType netBulkType, decimal netBulk, decimal price)
         {
             decimal expense = BillCalculatorService.CalcBulkExpense(netBulk, price);
             switch (netBulkType)
             {
-                case NetBulkType.HotWaterBulk:
+                case BulkType.HotWaterBulk:
                     HotWaterSum = expense;
                     return;
-                case NetBulkType.ColdWaterBulk:
+                case BulkType.ColdWaterBulk:
                     ColdWaterSum = expense;
                     return;
-                case NetBulkType.ElectricityBulk:
+                case BulkType.ElectricityBulk:
                     ElectricitySum = expense;
                     return;
-                case NetBulkType.WaterDisposalBulk:
+                case BulkType.WaterDisposalBulk:
                     WaterDisposalSum = expense;
                     return;
                 default:
@@ -429,15 +439,15 @@ namespace UtilitiesBills.ViewModels
             }
         }
 
-        private void OnWaterBulkChanged(NetBulkType netBulkType)
+        private void OnWaterBulkChanged(BulkType netBulkType)
         {
             UpdateWaterDisposalBulk();
             switch (netBulkType)
             {
-                case NetBulkType.HotWaterBulk:
+                case BulkType.HotWaterBulk:
                     CalcHotWaterSum();
                     return;
-                case NetBulkType.ColdWaterBulk:
+                case BulkType.ColdWaterBulk:
                     CalcColdWaterSum();
                     return;
                 default:
@@ -447,31 +457,31 @@ namespace UtilitiesBills.ViewModels
 
         private void CalcHotWaterSum()
         {
-            CalcBulkExpense(NetBulkType.HotWaterBulk, NetHotWaterBulk, HotWaterPrice);
+            CalcBulkExpense(BulkType.HotWaterBulk, HotWaterBulk, HotWaterPrice);
             UpdateTotalSum();
         }
 
         private void CalcColdWaterSum()
         {
-            CalcBulkExpense(NetBulkType.ColdWaterBulk, NetColdWaterBulk, ColdWaterPrice);
+            CalcBulkExpense(BulkType.ColdWaterBulk, ColdWaterBulk, ColdWaterPrice);
             UpdateTotalSum();
         }
 
         private void CalcWaterDisposalSum()
         {
-            CalcBulkExpense(NetBulkType.WaterDisposalBulk, WaterDisposalBulk, WaterDisposalPrice);
+            CalcBulkExpense(BulkType.WaterDisposalBulk, WaterDisposalBulk, WaterDisposalPrice);
             UpdateTotalSum();
         }
 
         private void CalcElectricitySum()
         {
-            CalcBulkExpense(NetBulkType.ElectricityBulk, NetElectricityBulk, ElectricityPrice);
+            CalcBulkExpense(BulkType.ElectricityBulk, ElectricityBulk, ElectricityPrice);
             UpdateTotalSum();
         }
 
         private void UpdateWaterDisposalBulk()
         {
-            WaterDisposalBulk = NetHotWaterBulk + NetColdWaterBulk;
+            WaterDisposalBulk = HotWaterBulk + ColdWaterBulk;
         }
 
         private void UpdateTotalSum()

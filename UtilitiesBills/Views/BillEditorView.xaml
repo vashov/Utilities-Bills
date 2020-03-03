@@ -10,9 +10,9 @@
              vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              x:Class="UtilitiesBills.Views.BillEditorView">
-    <!--<ContentPage.BindingContext>
+    <ContentPage.BindingContext>
         <vm:BillEditorViewModel />
-    </ContentPage.BindingContext>-->
+    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -120,7 +120,7 @@
                     <Entry 
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{Binding HotWaterBulk.Value}"
+                        Text="{Binding HotWaterValue.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -128,13 +128,13 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding HotWaterBulkRounded}"/>
+                        Text="{Binding HotWaterValueRounded}"/>
                     <Label 
                         Grid.Row="2"
                         Grid.Column="3"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding NetHotWaterBulk}"/>
+                        Text="{Binding HotWaterBulk}"/>
                     <Label 
                         Grid.Row="2"
                         Grid.Column="4"
@@ -151,7 +151,7 @@
                     <Entry 
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="{Binding ColdWaterBulk.Value}"
+                        Text="{Binding ColdWaterValue.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -159,13 +159,13 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding ColdWaterBulkRounded}"/>
+                        Text="{Binding ColdWaterValueRounded}"/>
                     <Label 
                         Grid.Row="3"
                         Grid.Column="3"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding NetColdWaterBulk}"/>
+                        Text="{Binding ColdWaterBulk}"/>
                     <Label 
                         Grid.Row="3"
                         Grid.Column="4"
@@ -182,7 +182,7 @@
                     <Entry 
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="{Binding ElectricityBulk.Value}"
+                        Text="{Binding ElectricityValue.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -190,13 +190,13 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding ElectricityBulkRounded}"/>
+                        Text="{Binding ElectricityValueRounded}"/>
                     <Label 
                         Grid.Row="4"
                         Grid.Column="3"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding NetElectricityBulk}"/>
+                        Text="{Binding ElectricityBulk}"/>
                     <Label 
                         Grid.Row="4"
                         Grid.Column="4"
@@ -273,7 +273,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevMeterReading.HotWaterBulk}"/>
+                                    Text="{Binding PrevBill.HotWaterValueRounded}"/>
 
                                 <Image 
                                     Grid.Row="1"
@@ -286,7 +286,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevMeterReading.ColdWaterBulk}"/>
+                                    Text="{Binding PrevBill.ColdWaterValueRounded}"/>
 
                                 <Image 
                                     Grid.Row="2"
@@ -299,7 +299,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevMeterReading.ElectricityBulk}"/>
+                                    Text="{Binding PrevBill.ElectricityValueRounded}"/>
                             </Grid>
                         </DataTemplate>
                     </expandable:ExpandableView.SecondaryViewTemplate>

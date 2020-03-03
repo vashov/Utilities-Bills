@@ -10,70 +10,9 @@ namespace UtilitiesBills.Services.Bill
     public class MockBillRepository : IRepository<BillItem>
     {
         private readonly List<BillItem> _bills;
-        private readonly List<MeterReadingItem> _meterReadingsItems;
 
         public MockBillRepository()
         {
-            _meterReadingsItems = new List<MeterReadingItem>
-            {
-                new MeterReadingItem
-                {
-                    Id = 1,
-                    HotWaterBulk = 304,
-                    ColdWaterBulk = 259,
-                    ElectricityBulk = 29609,
-                    DateOfReading = new DateTime(2019, 8, 15)
-                },
-                new MeterReadingItem
-                {
-                    Id = 2,
-                    HotWaterBulk = 308,
-                    ColdWaterBulk = 272,
-                    ElectricityBulk = 29737,
-                    DateOfReading = new DateTime(2019, 9, 15)
-                },
-                new MeterReadingItem
-                {
-                    Id = 3,
-                    HotWaterBulk = 283,
-                    ColdWaterBulk = 314,
-                    ElectricityBulk = 29866,
-                    DateOfReading = new DateTime(2019, 10, 16)
-                },
-                new MeterReadingItem
-                {
-                    Id = 4,
-                    HotWaterBulk = 321,
-                    ColdWaterBulk = 294,
-                    ElectricityBulk = 29991,
-                    DateOfReading = new DateTime(2019, 11, 17)
-                },
-                new MeterReadingItem
-                {
-                    Id = 5,
-                    HotWaterBulk = 329,
-                    ColdWaterBulk = 304,
-                    ElectricityBulk = 30114,
-                    DateOfReading = new DateTime(2019, 12, 15)
-                },
-                new MeterReadingItem
-                {
-                    Id = 6,
-                    HotWaterBulk = 336,
-                    ColdWaterBulk = 313,
-                    ElectricityBulk = 30238,
-                    DateOfReading = new DateTime(2020, 1, 14)
-                },
-                new MeterReadingItem
-                {
-                    Id = 7,
-                    HotWaterBulk = 344,
-                    ColdWaterBulk = 324,
-                    ElectricityBulk = 30434,
-                    DateOfReading = new DateTime(2020, 2, 15)
-                }
-            };
-
             _bills = new List<BillItem>
             {
                 new BillItem
@@ -81,46 +20,67 @@ namespace UtilitiesBills.Services.Bill
                     Id = 1,
                     Note = "First bill.",
                     CreationDate = new DateTime(2019, 8, 15),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 1)
+                    HotWaterValueRounded = 304,
+                    ColdWaterValueRounded = 259,
+                    ElectricityValueRounded = 29609,
+                    DateOfReading = new DateTime(2019, 8, 15)
                 },
                 new BillItem
                 {
                     Id = 2,
                     CreationDate = new DateTime(2019, 9, 15),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 2)
+                    HotWaterValueRounded = 308,
+                    ColdWaterValueRounded = 272,
+                    ElectricityValueRounded = 29737,
+                    DateOfReading = new DateTime(2019, 9, 15)
                 },
                 new BillItem
                 {
                     Id = 3,
                     Note = "Some bill.",
                     CreationDate = new DateTime(2019, 10, 16),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 3)
+                    HotWaterValueRounded = 283,
+                    ColdWaterValueRounded = 314,
+                    ElectricityValueRounded = 29866,
+                    DateOfReading = new DateTime(2019, 10, 16)
                 },
                 new BillItem
                 {
                     Id = 4,
                     Note = "Okay bill",
                     CreationDate = new DateTime(2019, 11, 17),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 4)
+                    HotWaterValueRounded = 321,
+                    ColdWaterValueRounded = 294,
+                    ElectricityValueRounded = 29991,
+                    DateOfReading = new DateTime(2019, 11, 17)
                 },
                 new BillItem
                 {
                     Id = 5,
                     CreationDate = new DateTime(2019, 12, 15),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 5)
+                    HotWaterValueRounded = 329,
+                    ColdWaterValueRounded = 304,
+                    ElectricityValueRounded = 30114,
+                    DateOfReading = new DateTime(2019, 12, 15)
                 },
                 new BillItem
                 {
                     Id = 6,
                     CreationDate = new DateTime(2020, 1, 14),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 6)
+                    HotWaterValueRounded = 336,
+                    ColdWaterValueRounded = 313,
+                    ElectricityValueRounded = 30238,
+                    DateOfReading = new DateTime(2020, 1, 14)
                 },
                 new BillItem
                 {
                     Id = 7,
                     Note = "Bad idea",
                     CreationDate = new DateTime(2020, 2, 15),
-                    MeterReading = _meterReadingsItems.First(m => m.Id == 7)
+                    HotWaterValueRounded = 344,
+                    ColdWaterValueRounded = 324,
+                    ElectricityValueRounded = 30434,
+                    DateOfReading = new DateTime(2020, 2, 15)
                 }
             };
 
@@ -131,16 +91,15 @@ namespace UtilitiesBills.Services.Bill
                 bill.ElectricityPrice = 2.6M;
                 bill.WaterDisposalPrice = 13.8M;
 
-                bill.WaterDisposalBulk = bill.MeterReading.ColdWaterBulk + bill.MeterReading.HotWaterBulk;
                 bill.TotalExpenses = GetTotalExpenses(bill);
             }
         }
 
         private decimal GetTotalExpenses(BillItem bill)
         {
-            return bill.MeterReading.HotWaterBulk * bill.HotWaterPrice
-                + bill.MeterReading.ColdWaterBulk * bill.ColdWaterPrice
-                + bill.MeterReading.ElectricityBulk * bill.ElectricityPrice
+            return bill.HotWaterValueRounded * bill.HotWaterPrice
+                + bill.ColdWaterValueRounded * bill.ColdWaterPrice
+                + bill.ElectricityValueRounded * bill.ElectricityPrice
                 + bill.WaterDisposalBulk * bill.WaterDisposalPrice;
         }
 

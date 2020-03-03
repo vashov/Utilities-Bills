@@ -9,12 +9,12 @@ namespace UtilitiesBills.Services.BillCalculator
             return bulk * price;
         }
 
-        public decimal CalcNetBulk(decimal currentBulk, decimal prevBulk)
+        public decimal CalcBulk(decimal currentBulk, decimal prevBulk)
         {
             return currentBulk - prevBulk; 
         }
 
-        public decimal RoundBulk(decimal bulk)
+        public decimal RoundBulkValue(decimal bulk)
         {
             return Math.Round(bulk);
         }
