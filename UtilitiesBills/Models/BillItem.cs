@@ -10,17 +10,17 @@ namespace UtilitiesBills.Models
         /// <summary>
         /// Округленное значение горячей воды по счетчику
         /// </summary>
-        public decimal HotWaterValueRounded { get; set; }
+        public decimal HotWaterCounterBulkRounded { get; set; }
 
         /// <summary>
         /// Округленное значение холодной воды по счетчику
         /// </summary>
-        public decimal ColdWaterValueRounded { get; set; }
+        public decimal ColdWaterCounterBulkRounded { get; set; }
 
         /// <summary>
         /// Округленное значение электричества по счетчику
         /// </summary>
-        public decimal ElectricityValueRounded { get; set; }
+        public decimal ElectricityCounterBulkRounded { get; set; }
 
         /// <summary>
         /// Объем использованной горячей воды

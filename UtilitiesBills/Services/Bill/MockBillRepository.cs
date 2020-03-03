@@ -20,18 +20,18 @@ namespace UtilitiesBills.Services.Bill
                     Id = 1,
                     Note = "First bill.",
                     CreationDate = new DateTime(2019, 8, 15),
-                    HotWaterValueRounded = 304,
-                    ColdWaterValueRounded = 259,
-                    ElectricityValueRounded = 29609,
+                    HotWaterCounterBulkRounded = 304,
+                    ColdWaterCounterBulkRounded = 259,
+                    ElectricityCounterBulkRounded = 29609,
                     DateOfReading = new DateTime(2019, 8, 15)
                 },
                 new BillItem
                 {
                     Id = 2,
                     CreationDate = new DateTime(2019, 9, 15),
-                    HotWaterValueRounded = 308,
-                    ColdWaterValueRounded = 272,
-                    ElectricityValueRounded = 29737,
+                    HotWaterCounterBulkRounded = 308,
+                    ColdWaterCounterBulkRounded = 272,
+                    ElectricityCounterBulkRounded = 29737,
                     DateOfReading = new DateTime(2019, 9, 15)
                 },
                 new BillItem
@@ -39,9 +39,9 @@ namespace UtilitiesBills.Services.Bill
                     Id = 3,
                     Note = "Some bill.",
                     CreationDate = new DateTime(2019, 10, 16),
-                    HotWaterValueRounded = 283,
-                    ColdWaterValueRounded = 314,
-                    ElectricityValueRounded = 29866,
+                    HotWaterCounterBulkRounded = 283,
+                    ColdWaterCounterBulkRounded = 314,
+                    ElectricityCounterBulkRounded = 29866,
                     DateOfReading = new DateTime(2019, 10, 16)
                 },
                 new BillItem
@@ -49,27 +49,27 @@ namespace UtilitiesBills.Services.Bill
                     Id = 4,
                     Note = "Okay bill",
                     CreationDate = new DateTime(2019, 11, 17),
-                    HotWaterValueRounded = 321,
-                    ColdWaterValueRounded = 294,
-                    ElectricityValueRounded = 29991,
+                    HotWaterCounterBulkRounded = 321,
+                    ColdWaterCounterBulkRounded = 294,
+                    ElectricityCounterBulkRounded = 29991,
                     DateOfReading = new DateTime(2019, 11, 17)
                 },
                 new BillItem
                 {
                     Id = 5,
                     CreationDate = new DateTime(2019, 12, 15),
-                    HotWaterValueRounded = 329,
-                    ColdWaterValueRounded = 304,
-                    ElectricityValueRounded = 30114,
+                    HotWaterCounterBulkRounded = 329,
+                    ColdWaterCounterBulkRounded = 304,
+                    ElectricityCounterBulkRounded = 30114,
                     DateOfReading = new DateTime(2019, 12, 15)
                 },
                 new BillItem
                 {
                     Id = 6,
                     CreationDate = new DateTime(2020, 1, 14),
-                    HotWaterValueRounded = 336,
-                    ColdWaterValueRounded = 313,
-                    ElectricityValueRounded = 30238,
+                    HotWaterCounterBulkRounded = 336,
+                    ColdWaterCounterBulkRounded = 313,
+                    ElectricityCounterBulkRounded = 30238,
                     DateOfReading = new DateTime(2020, 1, 14)
                 },
                 new BillItem
@@ -77,9 +77,9 @@ namespace UtilitiesBills.Services.Bill
                     Id = 7,
                     Note = "Bad idea",
                     CreationDate = new DateTime(2020, 2, 15),
-                    HotWaterValueRounded = 344,
-                    ColdWaterValueRounded = 324,
-                    ElectricityValueRounded = 30434,
+                    HotWaterCounterBulkRounded = 344,
+                    ColdWaterCounterBulkRounded = 324,
+                    ElectricityCounterBulkRounded = 30434,
                     DateOfReading = new DateTime(2020, 2, 15)
                 }
             };
@@ -97,9 +97,9 @@ namespace UtilitiesBills.Services.Bill
 
         private decimal GetTotalExpenses(BillItem bill)
         {
-            return bill.HotWaterValueRounded * bill.HotWaterPrice
-                + bill.ColdWaterValueRounded * bill.ColdWaterPrice
-                + bill.ElectricityValueRounded * bill.ElectricityPrice
+            return bill.HotWaterCounterBulkRounded * bill.HotWaterPrice
+                + bill.ColdWaterCounterBulkRounded * bill.ColdWaterPrice
+                + bill.ElectricityCounterBulkRounded * bill.ElectricityPrice
                 + bill.WaterDisposalBulk * bill.WaterDisposalPrice;
         }
 

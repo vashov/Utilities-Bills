@@ -30,9 +30,9 @@ namespace UtilitiesBills.Reports
             var builder = new StringBuilder();
 
             builder.AppendLine("Значения счётчиков:");
-            builder.AppendLine($"Хол. {_bill.ColdWaterValueRounded} ({_bill.ColdWaterExpenses} руб)");
-            builder.AppendLine($"Гор. {_bill.HotWaterValueRounded} ({_bill.HotWaterExpenses} руб)");
-            builder.AppendLine($"Эл. {_bill.ElectricityValueRounded} ({_bill.ElectricityExpenses} руб)");
+            builder.AppendLine($"Хол. {_bill.ColdWaterCounterBulkRounded} ({_bill.ColdWaterExpenses} руб)");
+            builder.AppendLine($"Гор. {_bill.HotWaterCounterBulkRounded} ({_bill.HotWaterExpenses} руб)");
+            builder.AppendLine($"Эл. {_bill.ElectricityCounterBulkRounded} ({_bill.ElectricityExpenses} руб)");
             builder.AppendLine($"Водоотв. {_bill.WaterDisposalExpenses} руб");
             builder.AppendLine($"Итого: {_bill.TotalExpenses} руб");
             builder.AppendLine("По тем же тарифам.");

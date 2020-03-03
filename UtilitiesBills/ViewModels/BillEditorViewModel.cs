@@ -21,9 +21,9 @@ namespace UtilitiesBills.ViewModels
         private BillItem _bill;
         private BillItem _prevBill;
 
-        private ValidatableObject<decimal> _hotWaterValue;
-        private ValidatableObject<decimal> _coldWaterValue;
-        private ValidatableObject<decimal> _electricityValue;
+        private ValidatableObject<decimal> _hotWaterCounterBulk;
+        private ValidatableObject<decimal> _coldWaterCounterBulk;
+        private ValidatableObject<decimal> _electricityCounterBulk;
         private ValidatableObject<string> _note;
         private bool _needSetPricesManually;
         private decimal _hotWaterPrice;
@@ -36,9 +36,9 @@ namespace UtilitiesBills.ViewModels
         private bool _isValid;
         private bool _isManuallyPrices;
 
-        private decimal _hotWaterValueRounded;
-        private decimal _coldWaterValueRounded;
-        private decimal _electricityValueRounded;
+        private decimal _hotWaterCounterBulkRounded;
+        private decimal _coldWaterCounterBulkRounded;
+        private decimal _electricityCounterBulkRounded;
 
         private decimal _hotWaterBulk;
         private decimal _coldWaterBulk;
@@ -61,22 +61,22 @@ namespace UtilitiesBills.ViewModels
             set => SetProperty(ref _prevBill, value);
         }
 
-        public ValidatableObject<decimal> HotWaterValue
+        public ValidatableObject<decimal> HotWaterCounterBulk
         {
-            get => _hotWaterValue;
-            set => SetProperty(ref _hotWaterValue, value);
+            get => _hotWaterCounterBulk;
+            set => SetProperty(ref _hotWaterCounterBulk, value);
         }
 
-        public ValidatableObject<decimal> ColdWaterValue
+        public ValidatableObject<decimal> ColdWaterCounterBulk
         {
-            get => _coldWaterValue;
-            set => SetProperty(ref _coldWaterValue, value);
+            get => _coldWaterCounterBulk;
+            set => SetProperty(ref _coldWaterCounterBulk, value);
         }
 
-        public ValidatableObject<decimal> ElectricityValue
+        public ValidatableObject<decimal> ElectricityCounterBulk
         {
-            get => _electricityValue;
-            set => SetProperty(ref _electricityValue, value);
+            get => _electricityCounterBulk;
+            set => SetProperty(ref _electricityCounterBulk, value);
         }
 
         public ValidatableObject<string> Note
@@ -133,34 +133,25 @@ namespace UtilitiesBills.ViewModels
             private set => SetProperty(ref _editDate, value);
         }
 
-        public decimal HotWaterValueRounded
+        public decimal HotWaterCounterBulkRounded
         {
-            get => _hotWaterValueRounded;
-            private set
-            {
-                SetProperty(ref _hotWaterValueRounded, value, () => 
-                    HotWaterBulk = CalcBulk(_hotWaterValueRounded, PrevBill.HotWaterValueRounded));
-            }
+            get => _hotWaterCounterBulkRounded;
+            private set =>
+                SetProperty(ref _hotWaterCounterBulkRounded, value, () => UpdateBulk(BulkType.HotWaterBulk));
         }
         
-        public decimal ColdWaterValueRounded
+        public decimal ColdWaterCounterBulkRounded
         {
-            get => _coldWaterValueRounded;
-            private set
-            {
-                SetProperty(ref _coldWaterValueRounded, value, () => 
-                    ColdWaterBulk = CalcBulk(_coldWaterValueRounded, PrevBill.ColdWaterValueRounded));
-            }
+            get => _coldWaterCounterBulkRounded;
+            private set => 
+                SetProperty(ref _coldWaterCounterBulkRounded, value, () => UpdateBulk(BulkType.ColdWaterBulk));
         }
 
-        public decimal ElectricityValueRounded
+        public decimal ElectricityCounterBulkRounded
         {
-            get => _electricityValueRounded;
-            private set
-            {
-                SetProperty(ref _electricityValueRounded, value, () => 
-                    ElectricityBulk = CalcBulk(_electricityValueRounded, PrevBill.ElectricityValueRounded));
-            }
+            get => _electricityCounterBulkRounded;
+            private set => 
+                SetProperty(ref _electricityCounterBulkRounded, value, () => UpdateBulk(BulkType.ElectricityBulk));
         }
 
         public decimal HotWaterBulk 
@@ -237,19 +228,19 @@ namespace UtilitiesBills.ViewModels
 
         public BillEditorViewModel()
         {
-            _hotWaterValue = 
-                new ValidatableObject<decimal>(() => HotWaterValueRounded = RoundBulk(HotWaterValue.Value));
-            _coldWaterValue = 
-                new ValidatableObject<decimal>(() => ColdWaterValueRounded = RoundBulk(ColdWaterValue.Value));
-            _electricityValue = 
-                new ValidatableObject<decimal>(() => ElectricityValueRounded = RoundBulk(ElectricityValue.Value));
+            _hotWaterCounterBulk = new ValidatableObject<decimal>(() 
+                => HotWaterCounterBulkRounded = RoundBulk(HotWaterCounterBulk.Value));
+            _coldWaterCounterBulk = new ValidatableObject<decimal>(() 
+                => ColdWaterCounterBulkRounded = RoundBulk(ColdWaterCounterBulk.Value));
+            _electricityCounterBulk = new ValidatableObject<decimal>(() 
+                => ElectricityCounterBulkRounded = RoundBulk(ElectricityCounterBulk.Value));
             _note = new ValidatableObject<string>();
 
             var context = new BillEditorValidatorContext
             {
-                HotWaterBulk = _hotWaterValue,
-                ColdWaterBulk = _coldWaterValue,
-                ElectricityBulk = _electricityValue,
+                HotWaterBulk = _hotWaterCounterBulk,
+                ColdWaterBulk = _coldWaterCounterBulk,
+                ElectricityBulk = _electricityCounterBulk,
                 Note = _note
             };
 
@@ -274,9 +265,9 @@ namespace UtilitiesBills.ViewModels
             {
                 _bill = args.Bill.Clone() as BillItem;
 
-                HotWaterValue.Value = _bill.HotWaterValueRounded;
-                ColdWaterValue.Value = _bill.ColdWaterValueRounded;
-                ElectricityValue.Value = _bill.ElectricityValueRounded;
+                HotWaterCounterBulk.Value = _bill.HotWaterCounterBulkRounded;
+                ColdWaterCounterBulk.Value = _bill.ColdWaterCounterBulkRounded;
+                ElectricityCounterBulk.Value = _bill.ElectricityCounterBulkRounded;
                 Note.Value = _bill.Note;
 
                 HotWaterPrice = _bill.HotWaterPrice;
@@ -327,9 +318,9 @@ namespace UtilitiesBills.ViewModels
                 return;
             }
 
-            _bill.HotWaterValueRounded = HotWaterValue.Value;
-            _bill.ColdWaterValueRounded = ColdWaterValue.Value;
-            _bill.ElectricityValueRounded = ElectricityValue.Value;
+            _bill.HotWaterCounterBulkRounded = HotWaterCounterBulk.Value;
+            _bill.ColdWaterCounterBulkRounded = ColdWaterCounterBulk.Value;
+            _bill.ElectricityCounterBulkRounded = ElectricityCounterBulk.Value;
             _bill.Note = Note.Value;
 
             _bill.HotWaterBulk = HotWaterBulk;
@@ -410,12 +401,7 @@ namespace UtilitiesBills.ViewModels
             DeleteBillCommand.ChangeCanExecute();
         }
 
-        private decimal RoundBulk(decimal bulk) => BillCalculatorService.RoundBulkValue(bulk);
-
-        private decimal CalcBulk(decimal roundedBulk, decimal prevBulk)
-        {
-            return BillCalculatorService.CalcBulk(roundedBulk, prevBulk);
-        }
+        private decimal RoundBulk(decimal bulk) => BillCalculatorService.RoundCounterBulk(bulk);
 
         private void CalcBulkExpense(BulkType netBulkType, decimal netBulk, decimal price)
         {
@@ -439,10 +425,28 @@ namespace UtilitiesBills.ViewModels
             }
         }
 
-        private void OnWaterBulkChanged(BulkType netBulkType)
+        private void UpdateBulk(BulkType bulkType)
+        {
+            switch (bulkType)
+            {
+                case BulkType.HotWaterBulk:
+                    HotWaterBulk = CalcBulk(_hotWaterCounterBulkRounded, PrevBill.HotWaterCounterBulkRounded);
+                    return;
+                case BulkType.ColdWaterBulk:
+                    ColdWaterBulk = CalcBulk(_coldWaterCounterBulkRounded, PrevBill.ColdWaterCounterBulkRounded);
+                    return;
+                case BulkType.ElectricityBulk:
+                    ElectricityBulk = CalcBulk(_electricityCounterBulkRounded, PrevBill.ElectricityCounterBulkRounded);
+                    return;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private void OnWaterBulkChanged(BulkType bulkType)
         {
             UpdateWaterDisposalBulk();
-            switch (netBulkType)
+            switch (bulkType)
             {
                 case BulkType.HotWaterBulk:
                     CalcHotWaterSum();
@@ -453,6 +457,11 @@ namespace UtilitiesBills.ViewModels
                 default:
                     throw new ArgumentException();
             }
+        }
+
+        private decimal CalcBulk(decimal roundedBulk, decimal prevBulk)
+        {
+            return BillCalculatorService.CalcBulk(roundedBulk, prevBulk);
         }
 
         private void CalcHotWaterSum()

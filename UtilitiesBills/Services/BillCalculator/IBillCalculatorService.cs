@@ -2,9 +2,9 @@
 {
     public interface IBillCalculatorService
     {
-        decimal RoundBulkValue(decimal bulkValue);
+        decimal RoundCounterBulk(decimal counterBulk);
         decimal RoundSum(decimal sum);
         decimal CalcBulkExpense(decimal bulk, decimal price);
-        decimal CalcBulk(decimal currentBulkValue, decimal prevBulkValue);
+        decimal CalcBulk(decimal currentCounterBulk, decimal prevCounterBulk);
     }
 }

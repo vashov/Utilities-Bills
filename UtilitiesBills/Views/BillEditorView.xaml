@@ -120,7 +120,7 @@
                     <Entry 
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{Binding HotWaterValue.Value}"
+                        Text="{Binding HotWaterCounterBulk.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -128,7 +128,7 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding HotWaterValueRounded}"/>
+                        Text="{Binding HotWaterCounterBulkRounded}"/>
                     <Label 
                         Grid.Row="2"
                         Grid.Column="3"
@@ -151,7 +151,7 @@
                     <Entry 
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="{Binding ColdWaterValue.Value}"
+                        Text="{Binding ColdWaterCounterBulk.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -159,7 +159,7 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding ColdWaterValueRounded}"/>
+                        Text="{Binding ColdWaterCounterBulkRounded}"/>
                     <Label 
                         Grid.Row="3"
                         Grid.Column="3"
@@ -182,7 +182,7 @@
                     <Entry 
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="{Binding ElectricityValue.Value}"
+                        Text="{Binding ElectricityCounterBulk.Value}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -190,7 +190,7 @@
                         Grid.Column="2"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand"
-                        Text="{Binding ElectricityValueRounded}"/>
+                        Text="{Binding ElectricityCounterBulkRounded}"/>
                     <Label 
                         Grid.Row="4"
                         Grid.Column="3"
@@ -273,7 +273,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevBill.HotWaterValueRounded}"/>
+                                    Text="{Binding PrevBill.HotWaterCounterBulkRounded}"/>
 
                                 <Image 
                                     Grid.Row="1"
@@ -286,7 +286,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevBill.ColdWaterValueRounded}"/>
+                                    Text="{Binding PrevBill.ColdWaterCounterBulkRounded}"/>
 
                                 <Image 
                                     Grid.Row="2"
@@ -299,7 +299,7 @@
                                     Grid.Column="1"
                                     FontSize="Medium"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding PrevBill.ElectricityValueRounded}"/>
+                                    Text="{Binding PrevBill.ElectricityCounterBulkRounded}"/>
                             </Grid>
                         </DataTemplate>
                     </expandable:ExpandableView.SecondaryViewTemplate>
