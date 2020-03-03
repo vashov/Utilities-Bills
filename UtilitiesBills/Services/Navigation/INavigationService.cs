@@ -16,33 +16,23 @@ namespace UtilitiesBills.Services.Navigation
         /// Выполняет иерархическую навигацию на указанной странице.
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
-        Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel;
+        void NavigateTo<TViewModel>() where TViewModel : BaseViewModel;
 
         /// <summary>
         /// Выполняет иерархическую навигацию на указанной странице, передавая параметр.
         /// </summary>
         /// <typeparam name="TViewModel"></typeparam>
         /// <param name="parameter"></param>
-        Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
-
-        /// <summary>
-        /// Удаляет предыдущую страницу из стека навигации.
-        /// </summary>
-        void RemoveLastFromBackStack();
-
-        /// <summary>
-        /// Удаляет все предыдущие страницы из стека навигации.
-        /// </summary>
-        void RemoveBackStack();
+        void NavigateTo<TViewModel>(object parameter) where TViewModel : BaseViewModel;
 
         /// <summary>
         /// Навигация с помощью меню MasterDetail.
         /// </summary>
         void NavigateFromMenu(MenuItemType id);
 
+        /// <summary>
+        /// Навигация с помощью меню MasterDetail.
+        /// </summary>
         void GoBack();
-
-        Task NavigateToModalAsync<TViewModel>() where TViewModel : BaseViewModel;
-        Task NavigateToModalAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel;
     }
 }

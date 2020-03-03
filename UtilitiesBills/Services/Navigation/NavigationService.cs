@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Threading.Tasks;
 using UtilitiesBills.Models;
 using UtilitiesBills.ViewModels.Base;
 using UtilitiesBills.Views;
@@ -35,28 +34,6 @@ namespace UtilitiesBills.Services.Navigation
             App.Current.MainPage = _defaultMasterDetailPage;
         }
 
-        public Page AddNavigationPageIfNotExists(MenuItemType id)
-        {
-            if (!_menuNavigationPages.ContainsKey(id))
-            {
-                switch (id)
-                {
-                    case MenuItemType.Bills:
-                        _menuNavigationPages.Add(id, new NavigationPage(new BillsView()));
-                        break;
-                    case MenuItemType.Settings:
-                        _menuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
-                        break;
-                    case MenuItemType.Charts:
-                        throw new NotImplementedException(nameof(MenuItemType.Charts));
-                    default:
-                        throw new InvalidEnumArgumentException(nameof(id), (int)id, typeof(MenuItemType));
-                }
-            }
-
-            return _menuNavigationPages[id];
-        }
-
         public void NavigateFromMenu(MenuItemType id)
         {
             Page newNavPage = AddNavigationPageIfNotExists(id);
@@ -77,25 +54,14 @@ namespace UtilitiesBills.Services.Navigation
             }
         }
 
-        public async Task NavigateToAsync<TViewModel>() where TViewModel : BaseViewModel
+        public void NavigateTo<TViewModel>() where TViewModel : BaseViewModel
         {
-            await InternalNavigateToAsync(typeof(TViewModel), null);
+            InternalNavigateTo(typeof(TViewModel), null);
         }
 
-        public async Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
+        public void NavigateTo<TViewModel>(object parameter) where TViewModel : BaseViewModel
         {
-            await InternalNavigateToAsync(typeof(TViewModel), parameter);
-        }
-
-        public void RemoveLastFromBackStack()
-        {
-            var detail = MasterDetailPage.Detail;
-
-            if (detail != null)
-            {
-                detail.Navigation.RemovePage(
-                    detail.Navigation.NavigationStack[detail.Navigation.NavigationStack.Count - 2]);
-            }
+            InternalNavigateTo(typeof(TViewModel), parameter);
         }
 
         public void GoBack()
@@ -107,36 +73,15 @@ namespace UtilitiesBills.Services.Navigation
                 detail.Navigation.PopAsync();
             }
         }
-
-        public void RemoveBackStack()
-        {
-            var detail = MasterDetailPage.Detail;
-
-            if (detail != null)
-            {
-                for (int i = 0; i < detail.Navigation.NavigationStack.Count - 1; i++)
-                {
-                    var page = detail.Navigation.NavigationStack[i];
-                    detail.Navigation.RemovePage(page);
-                }
-            }
-        }
         
-        private async Task InternalNavigateToAsync(Type viewModelType, object parameter, bool modal = false)
+        private void InternalNavigateTo(Type viewModelType, object parameter)
         {
             Page page = CreatePage(viewModelType);
 
             var detailPage = MasterDetailPage.Detail;
             if (detailPage != null)
             {
-                if (modal)
-                {
-                    await detailPage.Navigation.PushModalAsync(page);
-                }
-                else
-                {
-                    await detailPage.Navigation.PushAsync(page);
-                }
+                detailPage.Navigation.PushAsync(page);
             }
             else
             {
@@ -166,14 +111,26 @@ namespace UtilitiesBills.Services.Navigation
             return viewType;
         }
 
-        public async Task NavigateToModalAsync<TViewModel>() where TViewModel : BaseViewModel
+        private Page AddNavigationPageIfNotExists(MenuItemType id)
         {
-            await InternalNavigateToAsync(typeof(TViewModel), null, modal: true);
-        }
+            if (!_menuNavigationPages.ContainsKey(id))
+            {
+                switch (id)
+                {
+                    case MenuItemType.Bills:
+                        _menuNavigationPages.Add(id, new NavigationPage(new BillsView()));
+                        break;
+                    case MenuItemType.Settings:
+                        _menuNavigationPages.Add(id, new NavigationPage(new SettingsView()));
+                        break;
+                    case MenuItemType.Charts:
+                        throw new NotImplementedException(nameof(MenuItemType.Charts));
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(id), (int)id, typeof(MenuItemType));
+                }
+            }
 
-        public async Task NavigateToModalAsync<TViewModel>(object parameter) where TViewModel : BaseViewModel
-        {
-            await InternalNavigateToAsync(typeof(TViewModel), parameter, modal: true);
+            return _menuNavigationPages[id];
         }
     }
 }

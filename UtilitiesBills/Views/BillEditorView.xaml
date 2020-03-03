@@ -483,7 +483,6 @@
                             </Grid>
                         </DataTemplate>
                     </expandable:ExpandableView.SecondaryViewTemplate>
-
                 </expandable:ExpandableView>
             </StackLayout>
         </ScrollView>

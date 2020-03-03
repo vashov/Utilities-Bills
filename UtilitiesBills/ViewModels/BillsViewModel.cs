@@ -21,7 +21,7 @@ namespace UtilitiesBills.ViewModels
             InitializeCommands();
         }
 
-        public async void OnBillTapped(object sender, ItemTappedEventArgs e)
+        public void OnBillTapped(object sender, ItemTappedEventArgs e)
         {
             var bill = e.Item as BillItem;
             var args = new BillEditorArgs
@@ -29,7 +29,7 @@ namespace UtilitiesBills.ViewModels
                 Bill = bill.Clone() as BillItem,
                 PreviousMeterReading = GetPreviousMeterReading(bill)
             };
-            await NavigationService.NavigateToAsync<BillEditorViewModel>(args);
+            NavigationService.NavigateTo<BillEditorViewModel>(args);
         }
 
         private void InitializeCommands()
@@ -37,13 +37,13 @@ namespace UtilitiesBills.ViewModels
             AddBillCommand = new Command(AddBill);
         }
 
-        private async void AddBill()
+        private void AddBill()
         {
             var args = new BillEditorArgs
             {
                 PreviousMeterReading = GetLastMeterReading()
             };
-            await NavigationService.NavigateToAsync<BillEditorViewModel>(args);
+            NavigationService.NavigateTo<BillEditorViewModel>(args);
         }
 
         private MeterReadingItem GetLastMeterReading()
