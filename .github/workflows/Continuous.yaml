@@ -2,14 +2,25 @@ name: Continuous
 on: [push]
 
 jobs:
+  Test:
+    name: Test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+            cd UtilitiesBills.Tests
+            dotnet test
+
   Build:
+    needs: [Test]
     name: Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Restore nuget
         run: nuget restore
-        
+
       - name: Build android (debug)
         run: |
           cd UtilitiesBills.Android
