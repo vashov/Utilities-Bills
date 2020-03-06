@@ -16,12 +16,12 @@ namespace UtilitiesBills.Services.BillCalculator
 
         public decimal RoundCounterBulk(decimal counterBulk)
         {
-            return Math.Round(counterBulk);
+            return Math.Round(counterBulk, MidpointRounding.AwayFromZero);
         }
 
         public decimal RoundSum(decimal sum)
         {
-            return Math.Round(sum);
+            return Math.Round(sum, MidpointRounding.AwayFromZero);
         }
     }
 }
