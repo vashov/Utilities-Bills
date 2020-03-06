@@ -406,19 +406,20 @@ namespace UtilitiesBills.ViewModels
         private void CalcBulkExpense(BulkType netBulkType, decimal netBulk, decimal price)
         {
             decimal expense = BillCalculatorService.CalcBulkExpense(netBulk, price);
+            decimal expenseRounded = BillCalculatorService.RoundSum(expense);
             switch (netBulkType)
             {
                 case BulkType.HotWaterBulk:
-                    HotWaterSum = expense;
+                    HotWaterSum = expenseRounded;
                     return;
                 case BulkType.ColdWaterBulk:
-                    ColdWaterSum = expense;
+                    ColdWaterSum = expenseRounded;
                     return;
                 case BulkType.ElectricityBulk:
-                    ElectricitySum = expense;
+                    ElectricitySum = expenseRounded;
                     return;
                 case BulkType.WaterDisposalBulk:
-                    WaterDisposalSum = expense;
+                    WaterDisposalSum = expenseRounded;
                     return;
                 default:
                     throw new ArgumentException();
