@@ -1,0 +1,16 @@
+name: Continuous
+on: [push]
+
+jobs:
+  Build:
+    name: Build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Restore nuget
+        run: nuget restore
+        
+      - name: Build android (debug)
+        run: |
+          cd UtilitiesBills.Android
+          msbuild UtilitiesBills.Android.csproj /verbosity:normal /t:Rebuild /p:Configuration=Debug
