@@ -236,7 +236,7 @@ namespace UtilitiesBills.ViewModels
                 => ElectricityCounterBulkRounded = RoundBulk(ElectricityCounterBulk.Value));
             _note = new ValidatableObject<string>();
 
-            var context = new BillEditorValidatorContext
+            var validatorContext = new BillEditorValidatorContext
             {
                 HotWaterBulk = _hotWaterCounterBulk,
                 ColdWaterBulk = _coldWaterCounterBulk,
@@ -248,7 +248,7 @@ namespace UtilitiesBills.ViewModels
 
             OnEditorModeChanged += EditorModeChanged;
 
-            Validator = new BillEditorValidator(context);
+            Validator = new BillEditorValidator(validatorContext);
             Validator.AddValidations();
         }
 
@@ -318,27 +318,7 @@ namespace UtilitiesBills.ViewModels
                 return;
             }
 
-            _bill.HotWaterCounterBulkRounded = HotWaterCounterBulk.Value;
-            _bill.ColdWaterCounterBulkRounded = ColdWaterCounterBulk.Value;
-            _bill.ElectricityCounterBulkRounded = ElectricityCounterBulk.Value;
-            _bill.Note = Note.Value;
-
-            _bill.HotWaterBulk = HotWaterBulk;
-            _bill.ColdWaterBulk = ColdWaterBulk;
-            _bill.WaterDisposalBulk = WaterDisposalBulk;
-            _bill.ElectricityBulk = ElectricityBulk;
-
-            _bill.HotWaterExpenses = HotWaterSum;
-            _bill.ColdWaterExpenses = ColdWaterSum;
-            _bill.WaterDisposalExpenses = WaterDisposalSum;
-            _bill.ElectricityExpenses = ElectricitySum;
-            _bill.TotalExpenses = TotalSum;
-
-            _bill.DateOfReading = DateOfReading;
-            _bill.HotWaterPrice = HotWaterPrice;
-            _bill.ColdWaterPrice = ColdWaterPrice;
-            _bill.ElectricityPrice = ElectricityPrice;
-            _bill.WaterDisposalPrice = WaterDisposalPrice;
+            SetBillPropertiesForSaving(_bill);
 
             switch (EditorMode)
             {
@@ -352,6 +332,31 @@ namespace UtilitiesBills.ViewModels
                     throw new ArgumentException();
             }
             NavigationService.GoBack();
+        }
+
+        private void SetBillPropertiesForSaving(BillItem bill)
+        {
+            bill.HotWaterCounterBulkRounded = HotWaterCounterBulkRounded;
+            bill.ColdWaterCounterBulkRounded = ColdWaterCounterBulkRounded;
+            bill.ElectricityCounterBulkRounded = ElectricityCounterBulkRounded;
+            bill.Note = Note.Value;
+
+            bill.HotWaterBulk = HotWaterBulk;
+            bill.ColdWaterBulk = ColdWaterBulk;
+            bill.WaterDisposalBulk = WaterDisposalBulk;
+            bill.ElectricityBulk = ElectricityBulk;
+
+            bill.HotWaterExpenses = HotWaterSum;
+            bill.ColdWaterExpenses = ColdWaterSum;
+            bill.WaterDisposalExpenses = WaterDisposalSum;
+            bill.ElectricityExpenses = ElectricitySum;
+            bill.TotalExpenses = TotalSum;
+
+            bill.DateOfReading = DateOfReading;
+            bill.HotWaterPrice = HotWaterPrice;
+            bill.ColdWaterPrice = ColdWaterPrice;
+            bill.ElectricityPrice = ElectricityPrice;
+            bill.WaterDisposalPrice = WaterDisposalPrice;
         }
 
         private async void DeleteBill()

@@ -60,17 +60,43 @@ namespace UtilitiesBills.ViewModels
 
         private BillItem GetLastBill()
         {
-            return BillsItems
+            BillItem lastBill = BillsItems
                 .OrderByDescending(b => b.DateOfReading)
-                .First().Clone() as BillItem;
+                .FirstOrDefault();
+
+            // Если нет платежей, то значения берем из настроек.
+            if (lastBill == null)
+            {
+                lastBill = GetInitBulks();
+            }
+            
+            return lastBill.Clone() as BillItem;
         }
 
         private BillItem GetPreviousBill(BillItem bill)
         {
-            return BillsItems
+            BillItem prevBill = BillsItems
                 .Where(b => b.DateOfReading < bill.DateOfReading)
                 .OrderByDescending(b => b.DateOfReading)
-                .First().Clone() as BillItem;
+                .FirstOrDefault();
+
+            // Если нет платежей, то значения берем из настроек.
+            if (prevBill == null)
+            {
+                prevBill = GetInitBulks();
+            }
+
+            return prevBill.Clone() as BillItem;
+        }
+
+        private BillItem GetInitBulks()
+        {
+            return new BillItem()
+            {
+                HotWaterCounterBulkRounded = SettingsService.InitHotWaterBulk,
+                ColdWaterCounterBulkRounded = SettingsService.InitColdWaterBulk,
+                ElectricityCounterBulkRounded = SettingsService.InitElectricityBulk
+            };
         }
 
         private void SubscribeToModifyBillRepository()
