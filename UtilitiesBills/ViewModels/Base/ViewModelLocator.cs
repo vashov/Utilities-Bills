@@ -9,6 +9,7 @@ using UtilitiesBills.Services.BillCalculator;
 using UtilitiesBills.Services.Dialog;
 using UtilitiesBills.Services.Navigation;
 using UtilitiesBills.Services.Price;
+using UtilitiesBills.Services.Settings;
 using Xamarin.Forms;
 
 namespace UtilitiesBills.ViewModels.Base
@@ -30,7 +31,7 @@ namespace UtilitiesBills.ViewModels.Base
         static ViewModelLocator()
         {
             var builder = new ContainerBuilder();
-            RegisterTypes(builder, true);
+            RegisterTypes(builder, useMockServices: false);
 
             _container = builder.Build();
         }
@@ -57,6 +58,7 @@ namespace UtilitiesBills.ViewModels.Base
             builder.RegisterType<NavigationService>().As<INavigationService>().SingleInstance();
             builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
             builder.RegisterType<BillCalculatorService>().As<IBillCalculatorService>().SingleInstance();
+            builder.RegisterType<SettingsService>().As<ISettingsService>().SingleInstance();
 
             // Change injected dependencies
             if (useMockServices)
@@ -67,8 +69,9 @@ namespace UtilitiesBills.ViewModels.Base
             }
             else
             {
+                builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>().SingleInstance(); // TODO
+                builder.RegisterType<PriceService>().As<IPriceService>().SingleInstance();
                 UseMockService = false;
-                throw new NotImplementedException();
             }
         }
 
@@ -78,6 +81,9 @@ namespace UtilitiesBills.ViewModels.Base
             builder.RegisterType<BillsViewModel>().AsSelf();
             builder.RegisterType<SettingsViewModel>().AsSelf();
             builder.RegisterType<BillEditorViewModel>().AsSelf();
+            builder.RegisterType<InitialCounterEditorViewModel>().AsSelf();
+            builder.RegisterType<BackupInfoViewModel>().AsSelf();
+            builder.RegisterType<DefaultPricesEditorViewModel>().AsSelf();
         }
 
         private static void OnAutoWireViewModelChanged(BindableObject bindable, object oldValue, object newValue)

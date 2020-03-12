@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
+             xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
+             vmb:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             x:Class="UtilitiesBills.Views.InitialCounterEditorView"
+             Title="Значения счетчиков">
+    <!--<ContentPage.BindingContext>
+        <vm:InitialCounterEditorViewModel />
+    </ContentPage.BindingContext>-->
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            IconImageSource="edit"
+            Command="{Binding StartEditCommand}"/>
+
+        <ToolbarItem 
+            IconImageSource="save"
+            Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout 
+            Padding="20"
+            Spacing="20">
+            <Label 
+                Text="Стартовые значения счетчиков"
+                FontSize="Subtitle"
+                VerticalOptions="Center" 
+                HorizontalOptions="CenterAndExpand" />
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Image 
+                    Source="waterHot"
+                    WidthRequest="30"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Entry 
+                    Grid.Column="1"
+                    Text="{Binding HotWater}"
+                    Keyboard="Numeric"
+                    IsEnabled="{Binding IsSaveEnabled}"/>
+
+                <Image 
+                    Grid.Row="1"
+                    Source="waterCold"
+                    WidthRequest="30"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Entry 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="{Binding ColdWater}"
+                    Keyboard="Numeric"
+                    IsEnabled="{Binding IsSaveEnabled}"/>
+
+                <Image 
+                    Grid.Row="2"
+                    Source="electricity"
+                    WidthRequest="30"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Entry 
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Electricity}"
+                    Keyboard="Numeric"
+                    IsEnabled="{Binding IsSaveEnabled}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

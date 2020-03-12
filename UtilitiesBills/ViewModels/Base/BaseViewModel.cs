@@ -4,6 +4,7 @@ using UtilitiesBills.Services.BillCalculator;
 using UtilitiesBills.Services.Dialog;
 using UtilitiesBills.Services.Navigation;
 using UtilitiesBills.Services.Price;
+using UtilitiesBills.Services.Settings;
 using UtilitiesBills.Validations.ViewModelValidators;
 
 namespace UtilitiesBills.ViewModels.Base
@@ -15,6 +16,7 @@ namespace UtilitiesBills.ViewModels.Base
         protected IDialogService DialogService { get; private set; }
         protected IBillCalculatorService BillCalculatorService { get; private set; }
         protected IPriceService PriceService { get; private set; }
+        protected ISettingsService SettingsService { get; private set; }
         protected IValidator Validator { get; set; }
 
         public BaseViewModel()
@@ -24,6 +26,7 @@ namespace UtilitiesBills.ViewModels.Base
             DialogService = ViewModelLocator.Resolve<IDialogService>();
             PriceService = ViewModelLocator.Resolve<IPriceService>();
             BillCalculatorService = ViewModelLocator.Resolve<IBillCalculatorService>();
+            SettingsService = ViewModelLocator.Resolve<ISettingsService>();
         }
 
         public virtual void Initialize(object navigationData)

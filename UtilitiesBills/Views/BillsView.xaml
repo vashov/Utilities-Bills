@@ -6,7 +6,7 @@
              xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
              vmb:ViewModelLocator.AutoWireViewModel="true"
              mc:Ignorable="d"
-             Title="Bills"
+             Title="Список платежей"
              x:Name="BillsPageElement"
              x:Class="UtilitiesBills.Views.BillsView">
     <ContentPage.ToolbarItems>
@@ -44,7 +44,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Label 
-                                Text="{Binding CreationDate, 
+                                Text="{Binding DateOfReading, 
                                     StringFormat='{0:MMMM d, yyyy}'}"
                                 FontSize="Medium"/>
                             <Label 

@@ -6,12 +6,34 @@
              xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
              vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
-             x:Class="UtilitiesBills.Views.SettingsView">
+             x:Class="UtilitiesBills.Views.SettingsView"
+             Title="Настройки">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Settings View!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout 
+            Padding="20"
+            Spacing="20">
+            <StackLayout 
+                Orientation="Horizontal"
+                HorizontalOptions="End">
+                <Label 
+                    Text="Темная тема"
+                    FontSize="Large"
+                    VerticalOptions="Center" />
+                <Switch 
+                    IsToggled="{Binding IsDarkTheme}"/>
+            </StackLayout>
+
+            <Button 
+                Text="Стартовые значения счетчиков"
+                Command="{Binding ShowInitialCounterValuesCommand}"/>
+
+            <Button 
+                Text="Тарифы"
+                Command="{Binding ShowPricesCommand}"/>
+
+            <Button 
+                Text="Backup данных"
+                Command="{Binding ShowBackupInfoCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

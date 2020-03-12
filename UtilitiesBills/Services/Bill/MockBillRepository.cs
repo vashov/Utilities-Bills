@@ -105,6 +105,13 @@ namespace UtilitiesBills.Services.Bill
 
         public bool AddItem(BillItem item)
         {
+            int maxId = 0;
+            if (_bills.Any())
+            {
+                maxId = _bills.Max(bill => bill.Id);
+            }
+
+            item.Id = maxId + 1;
             _bills.Add(item);
             MessagingCenter.Send<IRepository<BillItem>>(this, MessageKeys.AddBillItem);
             return true;
