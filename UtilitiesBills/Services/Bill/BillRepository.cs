@@ -14,15 +14,15 @@ namespace UtilitiesBills.Services.Bill
         public BillRepository(ISettingsService settingsService)
         {
             _dbPath = settingsService.DatabasePath;
-            using (SQLiteConnection _connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                _connection.CreateTable<BillItem>();
+                connection.CreateTable<BillItem>();
             }
         }
 
         public bool AddItem(BillItem item)
         {
-            using (SQLiteConnection connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
                 int insertedCount = connection.Insert(item, typeof(BillItem));
                 if (insertedCount == 1)
@@ -36,15 +36,15 @@ namespace UtilitiesBills.Services.Bill
 
         public bool DeleteItem(int id)
         {
-            using (var _connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                BillItem billForDeleting = _connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == id);
+                BillItem billForDeleting = connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == id);
                 if (billForDeleting == null)
                 {
                     return false;
                 }
 
-                _connection.Delete<BillItem>(id);
+                connection.Delete<BillItem>(id);
                 MessagingCenter.Send<IRepository<BillItem>>(this, MessageKeys.DeleteBillItem);
                 return true;
             }
@@ -52,31 +52,31 @@ namespace UtilitiesBills.Services.Bill
 
         public BillItem GetItem(int id)
         {
-            using (var _connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                return _connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == id);
+                return connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == id);
             }
         }
 
         public IEnumerable<BillItem> GetItems()
         {
-            using (var _connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                return _connection.Table<BillItem>().ToList();
+                return connection.Table<BillItem>().ToList();
             }
         }
 
         public bool UpdateItem(BillItem item)
         {
-            using (var _connection = new SQLiteConnection(_dbPath))
+            using (var connection = new SQLiteConnection(_dbPath))
             {
-                BillItem billForUpdating = _connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == item.Id);
+                BillItem billForUpdating = connection.Table<BillItem>().FirstOrDefault(bill => bill.Id == item.Id);
                 if (billForUpdating == null)
                 {
                     return false;
                 }
 
-                _connection.Update(item, typeof(BillItem));
+                connection.Update(item, typeof(BillItem));
                 MessagingCenter.Send<IRepository<BillItem>>(this, MessageKeys.UpdateBillItem);
                 return true;
             }
