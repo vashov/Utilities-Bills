@@ -1,20 +1,22 @@
-﻿using UtilitiesBills.ViewModels.Base;
+﻿using UtilitiesBills.Helpers;
+using UtilitiesBills.ViewModels.Base;
 using Xamarin.Essentials;
 
 namespace UtilitiesBills.Services.Settings
 {
     public class SettingsService : BaseNotifier, ISettingsService
     {
-        private bool _isDarkTheme;
+        private const string DATABASENAME = "utilities.db3";
 
+        private bool _isDarkTheme;
         private decimal _initHotWaterBulk;
         private decimal _initColdWaterBulk;
         private decimal _initElectricityBulk;
-
         private decimal _defaultHotWaterPrice;
         private decimal _defaultColdWaterPrice;
         private decimal _defaultElectricityPrice;
         private decimal _defaultWaterDisposalPrice;
+        private string _emailForSendBackup;
 
         public bool IsDarkTheme 
         { 
@@ -112,6 +114,20 @@ namespace UtilitiesBills.Services.Settings
             }
         }
 
+        public string EmailForSendBackup 
+        { 
+            get => _emailForSendBackup;
+            set
+            {
+                if (SetProperty(ref _emailForSendBackup, value))
+                {
+                    AddOrUpdateValue(SettingsKeys.EmailForSendBackup, value);
+                }
+            } 
+        }
+
+        public string DatabasePath { get; private set; }
+
         public SettingsService()
         {
             _isDarkTheme = GetValue(SettingsKeys.IsDarkTheme, defaultValue: false);
@@ -124,6 +140,10 @@ namespace UtilitiesBills.Services.Settings
             _defaultColdWaterPrice = GetValue(SettingsKeys.DefaultColdWaterPrice, defaultValue: 0);
             _defaultElectricityPrice = GetValue(SettingsKeys.DefaultElectricityPrice, defaultValue: 0);
             _defaultWaterDisposalPrice = GetValue(SettingsKeys.DefaultWaterDisposalPrice, defaultValue: 0);
+
+            _emailForSendBackup = GetValue(SettingsKeys.EmailForSendBackup, defaultValue: string.Empty);
+
+            DatabasePath = FileHelper.GetLocalPath(DATABASENAME);
         }
 
         private void AddOrUpdateValue(string key, bool value)
@@ -136,6 +156,11 @@ namespace UtilitiesBills.Services.Settings
             Preferences.Set(key, (double)value);
         }
 
+        private void AddOrUpdateValue(string key, string value)
+        {
+            Preferences.Set(key, value);
+        }
+
         private bool GetValue(string key, bool defaultValue)
         {
             return Preferences.Get(key, defaultValue);
@@ -144,6 +169,11 @@ namespace UtilitiesBills.Services.Settings
         private decimal GetValue(string key, double defaultValue)
         {
             return (decimal) Preferences.Get(key, defaultValue);
+        }
+
+        private string GetValue(string key, string defaultValue)
+        {
+            return Preferences.Get(key, defaultValue);
         }
     }
 }

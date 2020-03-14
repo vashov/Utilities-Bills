@@ -12,5 +12,7 @@
         public static string DefaultColdWaterPrice { get; } = "DefaultColdWaterPrice";
         public static string DefaultElectricityPrice { get; } = "DefaultElectricityPrice";
         public static string DefaultWaterDisposalPrice { get; } = "DefaultWaterDisposalPrice";
+
+        public static string EmailForSendBackup { get; } = "EmailForSendBackup";
     }
 }

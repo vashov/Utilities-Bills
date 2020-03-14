@@ -107,12 +107,14 @@ namespace UtilitiesBills.ViewModels
                 .Subscribe<IRepository<BillItem>>(this, MessageKeys.DeleteBillItem, (s) => RefreshBillsItems());
             MessagingCenter
                 .Subscribe<IRepository<BillItem>>(this, MessageKeys.UpdateBillItem, (s) => RefreshBillsItems());
+            MessagingCenter
+                .Subscribe<BackupInfoViewModel>(this, MessageKeys.DatabaseRestored, (s) => RefreshBillsItems());
         }
 
         private void RefreshBillsItems()
         {
             BillsItems.Clear();
-            IOrderedEnumerable<BillItem> bills = BillsRepository.GetItems()
+            IOrderedEnumerable<BillItem> bills = BillRepository.GetItems()
                 .OrderByDescending(b => b.DateOfReading);
 
             foreach (BillItem bill in bills)

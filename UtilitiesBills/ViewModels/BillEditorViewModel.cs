@@ -367,7 +367,7 @@ namespace UtilitiesBills.ViewModels
             }
             if (await DialogService.ShowQuestion("Удалить счёт?", string.Empty, "Да", "Нет"))
             {
-                BillsRepository.DeleteItem(_bill.Id);
+                BillRepository.DeleteItem(_bill.Id);
                 NavigationService.GoBack();
             }
         }
@@ -379,7 +379,7 @@ namespace UtilitiesBills.ViewModels
                 throw new ArgumentNullException();
             }
             bill.CreationDate = CreationDate.ToUniversalTime();
-            BillsRepository.AddItem(bill);
+            BillRepository.AddItem(bill);
         }
 
         private void UpdateBill(BillItem bill)
@@ -389,7 +389,7 @@ namespace UtilitiesBills.ViewModels
                 throw new ArgumentNullException();
             }
             bill.EditDate = DateTime.UtcNow;
-            BillsRepository.UpdateItem(bill);
+            BillRepository.UpdateItem(bill);
         }
 
         private void StartEditBill()

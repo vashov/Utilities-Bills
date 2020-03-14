@@ -2,8 +2,9 @@
 {
     public static class MessageKeys
     {
-        public static string AddBillItem { get; private set; }    = "AddBillItem";
-        public static string UpdateBillItem { get; private set; } = "UpdateBillItem";
-        public static string DeleteBillItem { get; private set; } = "DeleteBillItem";
+        public static string AddBillItem { get; } = "AddBillItem";
+        public static string UpdateBillItem { get; }   = "UpdateBillItem";
+        public static string DeleteBillItem { get; }   = "DeleteBillItem";
+        public static string DatabaseRestored { get; } = "DatabaseRestored";
     }
 }

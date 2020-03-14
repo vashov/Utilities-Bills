@@ -1,10 +1,15 @@
-﻿using System;
+﻿using SQLite;
+using System;
 
 namespace UtilitiesBills.Models
 {
+    [Table("Bills")]
     public class BillItem : ICloneable
     {
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        
+        [MaxLength(100)]
         public string Note { get; set; }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace UtilitiesBills.ViewModels.Base
 {
     public class BaseViewModel : BaseNotifier
     {
-        protected IRepository<BillItem> BillsRepository { get; private set; }
+        protected IRepository<BillItem> BillRepository { get; private set; }
         protected INavigationService NavigationService { get; private set; }
         protected IDialogService DialogService { get; private set; }
         protected IBillCalculatorService BillCalculatorService { get; private set; }
@@ -21,7 +21,7 @@ namespace UtilitiesBills.ViewModels.Base
 
         public BaseViewModel()
         {
-            BillsRepository = ViewModelLocator.Resolve<IRepository<BillItem>>();
+            BillRepository = ViewModelLocator.Resolve<IRepository<BillItem>>();
             NavigationService = ViewModelLocator.Resolve<INavigationService>();
             DialogService = ViewModelLocator.Resolve<IDialogService>();
             PriceService = ViewModelLocator.Resolve<IPriceService>();
