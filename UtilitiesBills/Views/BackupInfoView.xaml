@@ -9,10 +9,26 @@
              Title="Резервная копия"
              x:Class="UtilitiesBills.Views.BackupInfoView">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Информация о резервном сохранении данных"
-                VerticalOptions="Center" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout 
+            Spacing="20"
+            Padding="20">
+            <StackLayout 
+                Orientation="Horizontal">
+                <Label 
+                    Text="Backup email:"
+                    FontSize="Subtitle"
+                    VerticalOptions="Center" />
+                <Entry 
+                    Text="{Binding EmailForSendBackup}"
+                    HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            
+            <Button 
+                Text="Отправить backup"
+                Command="{Binding SendBackupToEmailCommand}"/>
+            <Button 
+                Text="Восстановить данные"
+                Command="{Binding RestoreDatabaseCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

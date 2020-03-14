@@ -69,7 +69,7 @@ namespace UtilitiesBills.ViewModels.Base
             }
             else
             {
-                builder.RegisterType<MockBillRepository>().As<IRepository<BillItem>>().SingleInstance(); // TODO
+                builder.RegisterType<BillRepository>().As<IRepository<BillItem>>().SingleInstance();
                 builder.RegisterType<PriceService>().As<IPriceService>().SingleInstance();
                 UseMockService = false;
             }

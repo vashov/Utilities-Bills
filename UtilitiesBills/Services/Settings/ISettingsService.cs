@@ -12,5 +12,8 @@
         decimal DefaultColdWaterPrice { get; set; }
         decimal DefaultElectricityPrice { get; set; }
         decimal DefaultWaterDisposalPrice { get; set; }
+
+        string DatabasePath { get; }
+        string EmailForSendBackup { get; set; }
     }
 }
