@@ -9,9 +9,9 @@
              mc:Ignorable="d"
              x:Class="UtilitiesBills.Views.MenuView"
              Title="Menu">
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <vm:MenuViewModel />
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
     <ContentPage.Content>
         <ListView 
             x:Name="MenuList"
@@ -29,8 +29,15 @@
                                     <Setter Property="BackgroundColor" Value="DarkGray" />
                                 </DataTrigger>
                             </Grid.Triggers>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Image 
+                                Margin="10, 0"
+                                Source="{Binding IconSource}"/>
                             <Label 
-                                Margin="10"
+                                Grid.Column="1"
                                 VerticalTextAlignment="Center"
                                 Text="{Binding Title}"
                                 FontSize="Large"/>

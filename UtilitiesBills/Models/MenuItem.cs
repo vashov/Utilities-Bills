@@ -1,4 +1,6 @@
-﻿namespace UtilitiesBills.Models
+﻿using Xamarin.Forms;
+
+namespace UtilitiesBills.Models
 {
     public enum MenuItemType
     {
@@ -12,5 +14,6 @@
         public MenuItemType MenuType { get; set; }
         public string Title { get; set; }
         public bool IsAvailable { get; set; }
+        public string IconSource { get; set; }
     }
 }
