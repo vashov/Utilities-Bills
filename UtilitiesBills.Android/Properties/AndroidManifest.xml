@@ -3,7 +3,6 @@
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
 	<application 
         android:label="UtilitiesBills.Android"
-		android:theme="@android:style/Theme.Material"
         android:icon="@mipmap/icon">
         
     </application>
