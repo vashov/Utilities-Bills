@@ -13,25 +13,25 @@ namespace UtilitiesBills.Services.Navigation
 {
     public class NavigationService : INavigationService
     {
-        private MasterDetailPage _defaultMasterDetailPage = null;
         private readonly Dictionary<MenuItemType, NavigationPage> _menuNavigationPages = 
             new Dictionary<MenuItemType, NavigationPage>();
 
-        private MasterDetailPage MasterDetailPage => App.Current.MainPage as MasterDetailPage;
+        private MasterDetailPage MasterDetail { get; set; } = null;
 
         public void Initialize()
         {
-            if (_defaultMasterDetailPage == null)
+            if (MasterDetail == null)
             {
                 var detail = AddNavigationPageIfNotExists(MenuItemType.Bills);
-                _defaultMasterDetailPage = new MasterDetailPage
+                MasterDetail = new MasterDetailPage
                 {
                     Master = new MenuView(),
                     Detail = detail
                 };
+                (MasterDetail.Master as MenuView).SetFirstMenuItemAsSelected();
             }
 
-            App.Current.MainPage = _defaultMasterDetailPage;
+            App.Current.MainPage = MasterDetail;
         }
 
         public void NavigateFromMenu(MenuItemType id)
@@ -39,10 +39,10 @@ namespace UtilitiesBills.Services.Navigation
             Page newNavPage = AddNavigationPageIfNotExists(id);
             try
             {
-                if (MasterDetailPage.Detail != newNavPage)
+                if (MasterDetail.Detail != newNavPage)
                 {
-                    MasterDetailPage.Detail = newNavPage;
-                    MasterDetailPage.IsPresented = false;
+                    MasterDetail.Detail = newNavPage;
+                    MasterDetail.IsPresented = false;
 
                     var vm = (newNavPage as NavigationPage).CurrentPage.BindingContext as BaseViewModel;
                     vm.Initialize(null);
@@ -66,7 +66,7 @@ namespace UtilitiesBills.Services.Navigation
 
         public void GoBack()
         {
-            var detail = MasterDetailPage.Detail;
+            var detail = MasterDetail.Detail;
 
             if (detail != null)
             {
@@ -78,7 +78,7 @@ namespace UtilitiesBills.Services.Navigation
         {
             Page page = CreatePage(viewModelType);
 
-            var detailPage = MasterDetailPage.Detail;
+            var detailPage = MasterDetail.Detail;
             if (detailPage != null)
             {
                 detailPage.Navigation.PushAsync(page);
