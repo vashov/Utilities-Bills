@@ -26,7 +26,7 @@
             Command="{Binding DeleteBillCommand}"/>
         
         <ToolbarItem 
-            IconImageSource="edit"
+            IconImageSource="note"
             Command="{Binding StartEditBillCommand}"/>
 
         <ToolbarItem 
@@ -114,7 +114,7 @@
                     <Image 
                         Grid.Row="2"
                         Source="waterHot"
-                        WidthRequest="30"
+                        WidthRequest="35"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand" />
                     <Entry 
@@ -145,7 +145,7 @@
                     <Image 
                         Grid.Row="3"
                         Source="waterCold"
-                        WidthRequest="30"
+                        WidthRequest="35"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand" />
                     <Entry 
@@ -175,8 +175,8 @@
 
                     <Image 
                         Grid.Row="4"
-                        Source="electricity"
-                        WidthRequest="30"
+                        Source="energy"
+                        WidthRequest="35"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand" />
                     <Entry 
@@ -207,7 +207,7 @@
                     <Image 
                         Grid.Row="5"
                         Source="pipeline"
-                        WidthRequest="30"
+                        WidthRequest="35"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="StartAndExpand" />
                     <Label 
@@ -246,8 +246,8 @@
                                 VerticalTextAlignment="Center"/>
                             <Image 
                                 x:Name="arrowPrewMeterReadings" 
-                                Source="expandArrow" 
-                                WidthRequest="30" 
+                                Source="expand" 
+                                WidthRequest="35" 
                                 HorizontalOptions="EndAndExpand"/>
                         </StackLayout>
                     </expandable:ExpandableView.PrimaryView>
@@ -266,7 +266,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image 
                                     Source="waterHot"
-                                    WidthRequest="30"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="StartAndExpand" />
                                 <Label 
@@ -278,7 +278,7 @@
                                 <Image 
                                     Grid.Row="1"
                                     Source="waterCold"
-                                    WidthRequest="30"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="StartAndExpand" />
                                 <Label 
@@ -290,8 +290,8 @@
 
                                 <Image 
                                     Grid.Row="2"
-                                    Source="electricity"
-                                    WidthRequest="30"
+                                    Source="energy"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="StartAndExpand" />
                                 <Label 
@@ -318,8 +318,8 @@
                                 VerticalTextAlignment="Center"/>
                             <Image 
                                 x:Name="arrowPrices" 
-                                Source="expandArrow" 
-                                WidthRequest="30" 
+                                Source="expand" 
+                                WidthRequest="35" 
                                 HorizontalOptions="EndAndExpand"/>
                         </StackLayout>
                     </expandable:ExpandableView.PrimaryView>
@@ -340,7 +340,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image 
                                     Source="waterHot"
-                                    WidthRequest="30"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="StartAndExpand" />
                                 <Entry 
@@ -352,7 +352,7 @@
                                 <Image 
                                     Grid.Row="1"
                                     Source="waterCold"
-                                    WidthRequest="30"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="StartAndExpand" />
                                 <Entry 
@@ -364,8 +364,8 @@
 
                                 <Image 
                                     Grid.Column="2"
-                                    Source="electricity"
-                                    WidthRequest="30"
+                                    Source="energy"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="EndAndExpand" />
                                 <Entry 
@@ -378,7 +378,7 @@
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     Source="pipeline"
-                                    WidthRequest="30"
+                                    WidthRequest="35"
                                     VerticalOptions="CenterAndExpand" 
                                     HorizontalOptions="EndAndExpand" />
                                 <Entry 
@@ -417,8 +417,8 @@
                                 VerticalTextAlignment="Center"/>
                             <Image 
                                 x:Name="arrowNotes" 
-                                Source="expandArrow" 
-                                WidthRequest="30" 
+                                Source="expand" 
+                                WidthRequest="35" 
                                 HorizontalOptions="EndAndExpand"/>
                         </StackLayout>
                     </expandable:ExpandableView.PrimaryView>

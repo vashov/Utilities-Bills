@@ -14,7 +14,8 @@
             Spacing="20">
             <StackLayout 
                 Orientation="Horizontal"
-                HorizontalOptions="End">
+                HorizontalOptions="End"
+                IsEnabled="False">
                 <Label 
                     Text="Темная тема"
                     FontSize="Large"

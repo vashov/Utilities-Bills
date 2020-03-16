@@ -26,18 +26,21 @@ namespace UtilitiesBills.ViewModels
                 new MenuItem
                 {
                     MenuType = MenuItemType.Bills, 
-                    Title = "Bills",
+                    Title = "Список платежей",
+                    IconSource = "bills",
                     IsAvailable = true
                 },
                 new MenuItem
                 {
                     MenuType = MenuItemType.Charts,
-                    Title = "Charts"
+                    Title = "Графики",
+                    IconSource = "charts",
                 },
                 new MenuItem
                 { 
                     MenuType = MenuItemType.Settings,
-                    Title = "Settings",
+                    Title = "Настройки",
+                    IconSource = "settings",
                     IsAvailable = true
                 }
             };
