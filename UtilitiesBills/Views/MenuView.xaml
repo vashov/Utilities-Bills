@@ -20,15 +20,8 @@
             ItemsSource="{Binding MenuItems}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell IsEnabled="{Binding IsAvailable}">
+                    <ViewCell>
                         <Grid>
-                            <Grid.Triggers>
-                                <DataTrigger 
-                                    TargetType="Grid"
-                                    Binding="{Binding IsAvailable}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="DarkGray" />
-                                </DataTrigger>
-                            </Grid.Triggers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition />

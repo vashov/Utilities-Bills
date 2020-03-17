@@ -308,7 +308,8 @@
 
                 <expandable:ExpandableView 
                     x:Name="expandablePrices" 
-                    ExpandAnimationLength="100">
+                    ExpandAnimationLength="100"
+                    Margin="0,10">
                     <expandable:ExpandableView.PrimaryView>
                         <StackLayout Orientation="Horizontal">
                             <Label 
@@ -326,80 +327,81 @@
 
                     <expandable:ExpandableView.SecondaryViewTemplate>
                         <DataTemplate>
-                            <Grid Padding="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image 
-                                    Source="waterHot"
-                                    WidthRequest="35"
-                                    VerticalOptions="CenterAndExpand" 
-                                    HorizontalOptions="StartAndExpand" />
-                                <Entry 
-                                    Grid.Column="1"
-                                    Text="{Binding HotWaterPrice}"
-                                    Keyboard="Numeric"
-                                    IsEnabled="{Binding IsManuallyPrices}"/>
+                            <StackLayout>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image 
+                                        Source="waterHot"
+                                        WidthRequest="35"
+                                        VerticalOptions="CenterAndExpand" 
+                                        HorizontalOptions="StartAndExpand" />
+                                    <Entry 
+                                        Grid.Column="1"
+                                        Text="{Binding HotWaterPrice}"
+                                        Keyboard="Numeric"
+                                        IsEnabled="{Binding IsManuallyPrices}"/>
 
-                                <Image 
-                                    Grid.Row="1"
-                                    Source="waterCold"
-                                    WidthRequest="35"
-                                    VerticalOptions="CenterAndExpand" 
-                                    HorizontalOptions="StartAndExpand" />
-                                <Entry 
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Text="{Binding ColdWaterPrice}"
-                                    Keyboard="Numeric"
-                                    IsEnabled="{Binding IsManuallyPrices}"/>
+                                    <Image 
+                                        Grid.Row="1"
+                                        Source="waterCold"
+                                        WidthRequest="35"
+                                        VerticalOptions="CenterAndExpand" 
+                                        HorizontalOptions="StartAndExpand" />
+                                    <Entry 
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Text="{Binding ColdWaterPrice}"
+                                        Keyboard="Numeric"
+                                        IsEnabled="{Binding IsManuallyPrices}"/>
 
-                                <Image 
-                                    Grid.Column="2"
-                                    Source="energy"
-                                    WidthRequest="35"
-                                    VerticalOptions="CenterAndExpand" 
-                                    HorizontalOptions="EndAndExpand" />
-                                <Entry 
-                                    Grid.Column="3"
-                                    Text="{Binding ElectricityPrice}"
-                                    Keyboard="Numeric"
-                                    IsEnabled="{Binding IsManuallyPrices}"/>
+                                    <Image 
+                                        Grid.Column="2"
+                                        Source="energy"
+                                        WidthRequest="35"
+                                        VerticalOptions="CenterAndExpand" 
+                                        HorizontalOptions="EndAndExpand" />
+                                    <Entry 
+                                        Grid.Column="3"
+                                        Text="{Binding ElectricityPrice}"
+                                        Keyboard="Numeric"
+                                        IsEnabled="{Binding IsManuallyPrices}"/>
 
-                                <Image 
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Source="pipeline"
-                                    WidthRequest="35"
-                                    VerticalOptions="CenterAndExpand" 
-                                    HorizontalOptions="EndAndExpand" />
-                                <Entry 
-                                    Grid.Row="1"
-                                    Grid.Column="3"
-                                    Text="{Binding WaterDisposalPrice}"
-                                    Keyboard="Numeric"
-                                    IsEnabled="{Binding IsManuallyPrices}"/>
-
-                                <Label 
-                                    Grid.Row="2"
-                                    Grid.ColumnSpan="3"
-                                    VerticalOptions="CenterAndExpand" 
-                                    HorizontalOptions="EndAndExpand"
-                                    Text="Установить тарифы вручную"/>
-                                <Switch 
-                                    Grid.Row="2"
-                                    Grid.Column="3"
-                                    IsToggled="{Binding IsManuallyPrices}"
-                                    IsEnabled="{Binding IsSaveEnabled}"/>
-                            </Grid>
+                                    <Image 
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        Source="pipeline"
+                                        WidthRequest="35"
+                                        VerticalOptions="CenterAndExpand" 
+                                        HorizontalOptions="EndAndExpand" />
+                                    <Entry 
+                                        Grid.Row="1"
+                                        Grid.Column="3"
+                                        Text="{Binding WaterDisposalPrice}"
+                                        Keyboard="Numeric"
+                                        IsEnabled="{Binding IsManuallyPrices}"/>
+                                </Grid>
+                                
+                                <StackLayout Orientation="Horizontal">
+                                    <Label 
+                                        VerticalOptions="CenterAndExpand" 
+                                        HorizontalOptions="EndAndExpand"
+                                        Text="Установить тарифы вручную"/>
+                                    <Switch 
+                                        IsToggled="{Binding IsManuallyPrices}"
+                                        IsEnabled="{Binding IsSaveEnabled}"/>
+                                </StackLayout>
+                                
+                            </StackLayout>
                         </DataTemplate>
                     </expandable:ExpandableView.SecondaryViewTemplate>
 
