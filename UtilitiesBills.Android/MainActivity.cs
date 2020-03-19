@@ -1,11 +1,8 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Android.Runtime;
+using UtilitiesBills.Services.Logger;
 
 namespace UtilitiesBills.Droid
 {
@@ -21,6 +18,7 @@ namespace UtilitiesBills.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            InitializeNLog();
             LoadApplication(new App());
         }
 
@@ -29,6 +27,13 @@ namespace UtilitiesBills.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        private void InitializeNLog()
+        {
+            var assembly = this.GetType().Assembly;
+            var assemblyName = assembly.GetName().Name;
+            new LoggerService().Initialize(assembly, assemblyName);
         }
     }
 }

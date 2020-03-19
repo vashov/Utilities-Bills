@@ -16,6 +16,7 @@ namespace UtilitiesBills.ViewModels
         public Command ShowBackupInfoCommand { get; private set; }
         public Command ShowInitialCounterValuesCommand { get; private set; }
         public Command ShowPricesCommand { get; private set; }
+        public Command ShowLogsReportCommand { get; private set; }
 
         public SettingsViewModel()
         {
@@ -32,6 +33,7 @@ namespace UtilitiesBills.ViewModels
             ShowBackupInfoCommand = new Command(ShowBackupInfo);
             ShowInitialCounterValuesCommand = new Command(ShowInitialCounterValues);
             ShowPricesCommand = new Command(ShowPrices);
+            ShowLogsReportCommand = new Command(ShowLogsReport);
         }
 
         private void UpdateDarkThemeSettings()
@@ -55,6 +57,11 @@ namespace UtilitiesBills.ViewModels
         private void ShowPrices()
         {
             NavigationService.NavigateTo<DefaultPricesEditorViewModel>();
+        }
+
+        private void ShowLogsReport()
+        {
+            NavigationService.NavigateTo<LogsReportViewModel>();
         }
     }
 }

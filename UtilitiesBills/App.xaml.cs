@@ -6,6 +6,8 @@ namespace UtilitiesBills
 {
     public partial class App : Application
     {
+        private static INavigationService _navigationService = null;
+
         public App()
         {
             InitializeComponent();
@@ -26,8 +28,11 @@ namespace UtilitiesBills
 
         private void InitNavigation()
         {
-            var navigationService = ViewModelLocator.Resolve<INavigationService>();
-            navigationService.Initialize();
+            if (_navigationService == null)
+            {
+                _navigationService = ViewModelLocator.Resolve<INavigationService>();
+            }
+            _navigationService.Initialize();
         }
     }
 }

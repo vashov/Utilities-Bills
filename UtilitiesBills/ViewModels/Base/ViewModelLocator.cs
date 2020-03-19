@@ -84,6 +84,7 @@ namespace UtilitiesBills.ViewModels.Base
             builder.RegisterType<InitialCounterEditorViewModel>().AsSelf();
             builder.RegisterType<BackupInfoViewModel>().AsSelf();
             builder.RegisterType<DefaultPricesEditorViewModel>().AsSelf();
+            builder.RegisterType<LogsReportViewModel>().AsSelf();
         }
 
         private static void OnAutoWireViewModelChanged(BindableObject bindable, object oldValue, object newValue)

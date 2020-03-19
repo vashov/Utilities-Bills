@@ -14,5 +14,6 @@
         public static string DefaultWaterDisposalPrice { get; } = "DefaultWaterDisposalPrice";
 
         public static string EmailForSendBackup { get; } = "EmailForSendBackup";
+        public static string EmailForSendLogs { get; } = "EmailForSendLogs"; 
     }
 }
