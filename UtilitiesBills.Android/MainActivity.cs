@@ -1,11 +1,8 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Android.Runtime;
+using UtilitiesBills.Services.Log;
 
 namespace UtilitiesBills.Droid
 {
@@ -36,7 +33,8 @@ namespace UtilitiesBills.Droid
         {
             var assembly = this.GetType().Assembly;
             var assemblyName = assembly.GetName().Name;
-            new Services.Log.LogService().Initialize(assembly, assemblyName);
+            var logService = new LogService();
+            logService.Initialize(assembly, assemblyName);
         }
     }
 }
