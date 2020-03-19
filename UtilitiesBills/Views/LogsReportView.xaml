@@ -13,7 +13,9 @@
     </ContentPage.BindingContext>-->
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout
+            Spacing="20"
+            Padding="20">
             <StackLayout Orientation="Horizontal">
                 <Label 
                     Text="Logs email:"

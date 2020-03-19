@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
 
 namespace UtilitiesBills.Services.Logger
 {
@@ -11,11 +12,15 @@ namespace UtilitiesBills.Services.Logger
     {
         public void Initialize(Assembly assembly, string assemblyName)
         {
-            Stream nlogConfigFile = GetEmbeddedResourceStream(assembly, "NLog.config");
-            if (nlogConfigFile != null)
+            using (Stream nlogConfigFile = GetEmbeddedResourceStream(assembly, "NLog.config"))
             {
-                System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(nlogConfigFile);
-                LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
+                if (nlogConfigFile != null)
+                {
+                    using (XmlReader xmlReader = XmlReader.Create(nlogConfigFile))
+                    {
+                        LogManager.Configuration = new XmlLoggingConfiguration(xmlReader, null);
+                    }
+                }
             }
         }
 
