@@ -17,6 +17,7 @@ namespace UtilitiesBills.Services.Settings
         private decimal _defaultElectricityPrice;
         private decimal _defaultWaterDisposalPrice;
         private string _emailForSendBackup;
+        private string _emailForSendLogs;
 
         public bool IsDarkTheme 
         { 
@@ -114,8 +115,8 @@ namespace UtilitiesBills.Services.Settings
             }
         }
 
-        public string EmailForSendBackup 
-        { 
+        public string EmailForSendBackup
+        {
             get => _emailForSendBackup;
             set
             {
@@ -123,7 +124,19 @@ namespace UtilitiesBills.Services.Settings
                 {
                     AddOrUpdateValue(SettingsKeys.EmailForSendBackup, value);
                 }
-            } 
+            }
+        }
+
+        public string EmailForSendLogs
+        {
+            get => _emailForSendLogs;
+            set
+            {
+                if (SetProperty(ref _emailForSendLogs, value))
+                {
+                    AddOrUpdateValue(SettingsKeys.EmailForSendLogs, value);
+                }
+            }
         }
 
         public string DatabasePath { get; private set; }
@@ -142,6 +155,7 @@ namespace UtilitiesBills.Services.Settings
             _defaultWaterDisposalPrice = GetValue(SettingsKeys.DefaultWaterDisposalPrice, defaultValue: 0);
 
             _emailForSendBackup = GetValue(SettingsKeys.EmailForSendBackup, defaultValue: string.Empty);
+            _emailForSendLogs = GetValue(SettingsKeys.EmailForSendLogs, defaultValue: string.Empty);
 
             DatabasePath = FileHelper.GetLocalPath(DATABASENAME);
         }

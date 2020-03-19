@@ -35,6 +35,11 @@
             <Button 
                 Text="Backup данных"
                 Command="{Binding ShowBackupInfoCommand}"/>
+
+            <Button 
+                Text="Логи"
+                Command="{Binding ShowLogsReportCommand}"/>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

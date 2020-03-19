@@ -8,7 +8,7 @@ namespace UtilitiesBills.Services.Navigation
     public interface INavigationService
     {
         /// <summary>
-        /// Выполняет переход на одну из двух страниц при запуске приложения.
+        /// Выполняет переход на MasterDetail страницу при запуске приложения.
         /// </summary>
         void Initialize();
 

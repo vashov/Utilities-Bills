@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,6 +14,7 @@ namespace UtilitiesBills.Services.Navigation
 {
     public class NavigationService : INavigationService
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger(); 
         private readonly Dictionary<MenuItemType, NavigationPage> _menuNavigationPages = 
             new Dictionary<MenuItemType, NavigationPage>();
 
@@ -50,7 +52,7 @@ namespace UtilitiesBills.Services.Navigation
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                _logger.Error(e, "Exception navigating from menu.");
             }
         }
 

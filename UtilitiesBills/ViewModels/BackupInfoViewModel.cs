@@ -1,4 +1,5 @@
-﻿using Plugin.FilePicker;
+﻿using NLog;
+using Plugin.FilePicker;
 using Plugin.FilePicker.Abstractions;
 using SQLite;
 using System;
@@ -13,6 +14,7 @@ namespace UtilitiesBills.ViewModels
 {
     public class BackupInfoViewModel : BaseViewModel
     {
+        private readonly ILogger _logger = LogManager.GetCurrentClassLogger(); 
         private string emailForSendBackup;
 
         public string EmailForSendBackup 
@@ -44,23 +46,30 @@ namespace UtilitiesBills.ViewModels
         {
             string dbPath = SettingsService.DatabasePath;
             string backupFilePath = FileHelper.GetLocalCachePath("utilitiesBackup.db3");
-            if (!File.Exists(backupFilePath))
+            try
             {
-                File.Create(backupFilePath).Close();
-            }
-            using (var conn = new SQLiteConnection(dbPath))
-            {
-                conn.Backup(backupFilePath);
-            }
+                if (!File.Exists(backupFilePath))
+                {
+                    File.Create(backupFilePath).Close();
+                }
+                using (var conn = new SQLiteConnection(dbPath))
+                {
+                    conn.Backup(backupFilePath);
+                }
 
-            var message = new EmailMessage
+                var message = new EmailMessage
+                {
+                    To = new List<string> { EmailForSendBackup },
+                    Subject = "Backup",
+                    Body = $"Send a backup ({DateTime.Now}).",
+                };
+                message.Attachments.Add(new EmailAttachment(backupFilePath));
+                await Email.ComposeAsync(message);
+            }
+            catch(Exception ex)
             {
-                To = new List<string> { EmailForSendBackup },
-                Subject = "Backup",
-                Body = $"Send a backup ({DateTime.Now}).",
-            };
-            message.Attachments.Add(new EmailAttachment(backupFilePath));
-            await Email.ComposeAsync(message);
+                LogHelper.LogErrorAndUserAlert(DialogService, _logger, ex, "Exception sending backup to email.");
+            }
         }
 
         private async void RestoreDatabase()
@@ -96,7 +105,7 @@ namespace UtilitiesBills.ViewModels
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("Exception choosing file: " + ex.ToString());
+                LogHelper.LogErrorAndUserAlert(DialogService, _logger, ex, "Exception choosing file.");
                 return;
             }
 
@@ -109,7 +118,7 @@ namespace UtilitiesBills.ViewModels
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine("Exception backuping file: " + ex.ToString());
+                LogHelper.LogErrorAndUserAlert(DialogService, _logger, ex, "Exception backuping file.");
                 return;
             }
 

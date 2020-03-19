@@ -15,5 +15,6 @@
 
         string DatabasePath { get; }
         string EmailForSendBackup { get; set; }
+        string EmailForSendLogs { get; set; }
     }
 }
