@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using UtilitiesBills.Services.Logger;
 
 namespace UtilitiesBills.Droid
 {
@@ -32,8 +33,7 @@ namespace UtilitiesBills.Droid
         {
             var assembly = this.GetType().Assembly;
             var assemblyName = assembly.GetName().Name;
-            var logService = new UtilitiesBills.Services.Log.LogService();
-            logService.Initialize(assembly, assemblyName);
+            new LoggerService().Initialize(assembly, assemblyName);
         }
     }
 }
