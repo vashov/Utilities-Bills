@@ -100,12 +100,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UtilitiesBills\UtilitiesBills.csproj">
-      <Project>{C9265528-9A65-4431-B972-BB8FF93BCF6A}</Project>
-      <Name>UtilitiesBills</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\splash_screen.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +287,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NLog.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UtilitiesBills\UtilitiesBills.csproj">
+      <Project>{5ad1e72b-de63-41ed-9d94-7e6126df63eb}</Project>
+      <Name>UtilitiesBills</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
