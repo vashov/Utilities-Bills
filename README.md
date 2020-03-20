@@ -1,6 +1,8 @@
 # Utilities-Bills
 A mobile app is for calculate and storing some utilities bills.
 
+![](https://github.com/vashov/Utilities-Bills/workflows/Continuous/badge.svg)
+
 ## Why this application?
 This application was a good way to learn a cross platform technology Xamarin.
 
