@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
+             xmlns:conv="clr-namespace:UtilitiesBills.Converters"
              vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              x:Class="UtilitiesBills.Views.DefaultPricesEditorView"
@@ -11,6 +12,12 @@
     <!--<ContentPage.BindingContext>
         <vm:DefaultPricesEditorViewModel />
     </ContentPage.BindingContext>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DecimalConverter x:Key="decimalConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem 
@@ -52,7 +59,8 @@
                     HorizontalOptions="StartAndExpand" />
                 <Entry 
                     Grid.Column="1"
-                    Text="{Binding HotWaterPrice}"
+                    Text="{Binding HotWaterPrice, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
 
@@ -65,7 +73,8 @@
                 <Entry 
                     Grid.Row="1"
                     Grid.Column="1"
-                    Text="{Binding ColdWaterPrice}"
+                    Text="{Binding ColdWaterPrice, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
 
@@ -78,7 +87,8 @@
                 <Entry 
                     Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding ElectricityPrice}"
+                    Text="{Binding ElectricityPrice, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
 
@@ -91,7 +101,8 @@
                 <Entry 
                     Grid.Row="3"
                     Grid.Column="1"
-                    Text="{Binding WaterDisposalPrice}"
+                    Text="{Binding WaterDisposalPrice, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
             </Grid>

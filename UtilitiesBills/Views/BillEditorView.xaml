@@ -17,6 +17,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:NullToBooleanConverter x:Key="nullToBooleanConverter" />
+            <conv:DecimalConverter x:Key="decimalConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -120,7 +121,8 @@
                     <Entry 
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{Binding HotWaterCounterBulk.Value}"
+                        Text="{Binding HotWaterCounterBulk.Value, 
+                            Converter={StaticResource decimalConverter}}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -151,7 +153,8 @@
                     <Entry 
                         Grid.Row="3"
                         Grid.Column="1"
-                        Text="{Binding ColdWaterCounterBulk.Value}"
+                        Text="{Binding ColdWaterCounterBulk.Value, 
+                            Converter={StaticResource decimalConverter}}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -182,7 +185,8 @@
                     <Entry 
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="{Binding ElectricityCounterBulk.Value}"
+                        Text="{Binding ElectricityCounterBulk.Value, 
+                            Converter={StaticResource decimalConverter}}"
                         Keyboard="Numeric"
                         IsEnabled="{Binding IsSaveEnabled}"/>
                     <Label 
@@ -347,7 +351,8 @@
                                         HorizontalOptions="StartAndExpand" />
                                     <Entry 
                                         Grid.Column="1"
-                                        Text="{Binding HotWaterPrice}"
+                                        Text="{Binding HotWaterPrice, 
+                                            Converter={StaticResource decimalConverter}}"
                                         Keyboard="Numeric"
                                         IsEnabled="{Binding IsManuallyPrices}"/>
 
@@ -360,7 +365,8 @@
                                     <Entry 
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Text="{Binding ColdWaterPrice}"
+                                        Text="{Binding ColdWaterPrice, 
+                                            Converter={StaticResource decimalConverter}}"
                                         Keyboard="Numeric"
                                         IsEnabled="{Binding IsManuallyPrices}"/>
 
@@ -372,7 +378,8 @@
                                         HorizontalOptions="EndAndExpand" />
                                     <Entry 
                                         Grid.Column="3"
-                                        Text="{Binding ElectricityPrice}"
+                                        Text="{Binding ElectricityPrice, 
+                                            Converter={StaticResource decimalConverter}}"
                                         Keyboard="Numeric"
                                         IsEnabled="{Binding IsManuallyPrices}"/>
 
@@ -386,7 +393,8 @@
                                     <Entry 
                                         Grid.Row="1"
                                         Grid.Column="3"
-                                        Text="{Binding WaterDisposalPrice}"
+                                        Text="{Binding WaterDisposalPrice, 
+                                            Converter={StaticResource decimalConverter}}"
                                         Keyboard="Numeric"
                                         IsEnabled="{Binding IsManuallyPrices}"/>
                                 </Grid>

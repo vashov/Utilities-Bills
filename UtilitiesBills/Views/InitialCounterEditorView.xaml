@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vmb="clr-namespace:UtilitiesBills.ViewModels.Base"
              xmlns:vm="clr-namespace:UtilitiesBills.ViewModels"
+             xmlns:conv="clr-namespace:UtilitiesBills.Converters"
              vmb:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              x:Class="UtilitiesBills.Views.InitialCounterEditorView"
@@ -12,6 +13,12 @@
     <!--<ContentPage.BindingContext>
         <vm:InitialCounterEditorViewModel />
     </ContentPage.BindingContext>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DecimalConverter x:Key="decimalConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem 
@@ -52,7 +59,8 @@
                     HorizontalOptions="StartAndExpand" />
                 <Entry 
                     Grid.Column="1"
-                    Text="{Binding HotWater}"
+                    Text="{Binding HotWater, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
 
@@ -65,7 +73,8 @@
                 <Entry 
                     Grid.Row="1"
                     Grid.Column="1"
-                    Text="{Binding ColdWater}"
+                    Text="{Binding ColdWater, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
 
@@ -78,7 +87,8 @@
                 <Entry 
                     Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding Electricity}"
+                    Text="{Binding Electricity, 
+                        Converter={StaticResource decimalConverter}}"
                     Keyboard="Numeric"
                     IsEnabled="{Binding IsSaveEnabled}"/>
             </Grid>
